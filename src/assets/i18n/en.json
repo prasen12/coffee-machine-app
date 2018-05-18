@@ -1,0 +1,27 @@
+{
+    "MAIN": {
+        "MENU": "Menu"
+    },
+    "NAVIGATION": {
+        "HOME": "Home",
+        "DIAGNOSTICS": "Diagnostics",
+        "SETTINGS": "Settings",
+        "RECIPES": "Recipes",
+        "MAINTENANCE": "Maintenance"
+    },
+    "SETTINGS": {
+        "PARTICLE": {
+            "USERNAME": "Username",
+            "PASSWORD": "Password",
+            "LOGIN_SUCCESS": "You are successfully signed in to Particle.io",
+            "SUCCESS": "Success!",
+            "CONNECTING": "Connecting to Particle.io...",
+            "ERROR": "Error!",
+            "LOGIN_FAILED": "Failed to sign on to Particle.io"
+        },
+        "DEVICES": {
+            "NO_DEVICES": "No devices found. Make sure you have signed in to particle.io",
+            "ERROR": "Failed to get devices"
+        }
+    }
+} 

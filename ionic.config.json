@@ -1,0 +1,8 @@
+{
+  "name": "orenda-companion-app",
+  "app_id": "",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}

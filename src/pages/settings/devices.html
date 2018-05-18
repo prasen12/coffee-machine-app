@@ -1,0 +1,13 @@
+<ion-content  padding>
+  <ion-title>Select Device</ion-title>
+  <ion-list  radio-group>
+    <ion-item *ngFor="let device of deviceList; first as isFirst; index as index">
+      <ion-label>{{device.id}}</ion-label>
+      <ion-radio *ngIf="isFirst" checked="true" value="{{device.id}}"></ion-radio>
+      <ion-radio *ngIf="index > 0" checked="false" value="{{device.id}}"></ion-radio>
+    </ion-item>
+  </ion-list>  
+  <p *ngIf="deviceList.length === 0"  >{{'SETTINGS.DEVICES.NO_DEVICES' | translate}}</p>
+  <button ion-button type="submit" color="secondary"  (click)="loadDevices()" block>Load Devices</button>
+
+</ion-content>

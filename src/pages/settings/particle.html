@@ -1,0 +1,15 @@
+<ion-content padding>
+  <ion-title>Particle.io Account</ion-title>
+  <form [formGroup]="loginForm" (ngSubmit)="login()">
+    <ion-item>
+      <ion-label floating>{{ 'SETTINGS.PARTICLE.USERNAME' | translate }}</ion-label>
+      <ion-input name="userName" type="email" formControlName="userName"></ion-input>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label floating>{{ 'SETTINGS.PARTICLE.PASSWORD' | translate }}</ion-label>
+      <ion-input type="password" formControlName="password"></ion-input>
+    </ion-item>
+    <button ion-button [disabled]="!loginForm.valid" type="submit" block>Login</button>
+  </form>
+</ion-content>
