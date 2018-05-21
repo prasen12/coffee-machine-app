@@ -1,2 +1,2 @@
 # coffee-machine-app
-Companion app for the open-source Orenda coffee machine firmware
+Companion app for the Orenda coffee machine open-source firmware
