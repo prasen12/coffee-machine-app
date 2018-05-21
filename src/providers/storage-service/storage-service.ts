@@ -23,29 +23,44 @@
  * 
  * 
  * 
- *  File Created: Monday, 14th May 2018 11:27:30 pm
+ *  File Created: Sunday, 20th May 2018 3:51:45 pm
  *  Author: Prasen Palvankar 
  * 
- *  Last Modified: Monday, 14th May 2018 11:27:30 pm
+ *  Last Modified: Sunday, 20th May 2018 11:57:49 pm
  *  Modified By: Prasen Palvankar 
- * 
- * 
  */
-import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+
+
 import { Storage } from '@ionic/storage';
+import { Injectable } from '@angular/core';
 
-@Component({
-    selector: 'page-diagnostics',
-    templateUrl: 'diagnostics.html'
-})
-export class DiagnosticsPage {
-    private selectedDeviceId: string;
+@Injectable()
+export class StorageServiceProvider {
+  static readonly SELECTED_DEVICE = 'selectedDevice';
+  static readonly DEVICE_LIST = 'deviceList';
+  static readonly LOGIN_DATA = 'loginData';
+  static readonly RECIPE_LIST = 'recipeList';
 
-    constructor(public navCtrl: NavController,
-            public nacParams: NavParams,
-            private storage: Storage) {
-        
-    }
+  constructor(private storage: Storage) {
+    
+  }
+
+  public getData(key: string):Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.storage.get(key)
+        .then(str=> {
+          if (str) {
+            resolve(JSON.parse(str));
+          } else {
+            resolve(null);
+          }
+        })
+        .catch(err=>resolve(null));
+    });
+  }
+
+  putData(key: string, value:Object):void {
+    this.storage.set(key, JSON.stringify(value));
+  }
+
 }
-

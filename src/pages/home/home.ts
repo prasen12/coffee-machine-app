@@ -33,17 +33,65 @@
  */
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { AlertController } from 'ionic-angular';
+import { TranslateService } from '@ngx-translate/core';
+import { Storage } from '@ionic/storage';
+
+import { ParticleIoServiceProvider } from './../../providers/particle-io-service/particle-io-service';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
-  
-  constructor(public navCtrl: NavController) {
-    
+  private messages: any;
+  public device: any;
+  public statusMessage: string;
+
+  constructor(public navCtrl: NavController,
+    private translateService: TranslateService,
+    private alertCtrl: AlertController,
+    private storage: Storage,
+    private particleIOService: ParticleIoServiceProvider) {
+
+    this.messages = {
+      'HOME.ERROR': '',
+      'MAIN.OK': ''
+    };
+    this.device = {};
+
+    for (let messageId in this.messages) {
+      this.translateService.get(messageId).subscribe(res => {
+        this.messages[messageId] = res;
+      });
+    }
+    storage.get('selectedDevice')
+      .then(selectedDeviceStr => {
+        if (selectedDeviceStr) {
+          let selectedDevice = JSON.parse(selectedDeviceStr);
+          this.particleIOService.getDevice(selectedDevice.id)
+            .then(device => {
+              console.log(device);
+              this.device = device;
+            })
+            .catch(error => {
+              let alert = this.alertCtrl.create({
+                title: this.messages['HOME.ERROR'],
+                subTitle: error.message,
+                buttons: [this.messages['MAIN.OK']]
+              });
+              alert.present();
+            });
+        } else {
+          this.statusMessage = this.messages['HOME.NO_DEVICE_SELECTED'];
+        }
+
+      })
   }
 
+  get connected(): boolean {
+    return this.device ? this.device.connected : false;
+  }
   get title() {
     return "My home";
   }

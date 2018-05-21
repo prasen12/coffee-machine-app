@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="io.ionic.starter" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>orenda-companion-app</name>
+    <name>Orenda Companion</name>
     <description>Companion app for the open source Orenda Coffee machine firmware</description>
     <author email="prasen.palvanka@gmail.com" href="https://github.com/prasen12">Prasen Palvankar</author>
     <content src="index.html" />
@@ -76,10 +76,10 @@
         <splash height="480" src="resources/ios/splash/Default~iphone.png" width="320" />
         <splash height="2732" src="resources/ios/splash/Default@2x~universal~anyany.png" width="2732" />
     </platform>
-    <engine name="android" spec="^6.2.3" />
     <plugin name="cordova-plugin-device" spec="^2.0.2" />
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
     <plugin name="cordova-plugin-ionic-webview" spec="^1.2.1" />
-    <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />
     <plugin name="cordova-plugin-whitelist" spec="^1.3.3" />
+    <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />
+    <engine name="android" spec="6.4.0" />
 </widget>

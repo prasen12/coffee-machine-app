@@ -40,10 +40,11 @@ import { HomePage } from '../pages/home/home';
 //import { ListPage } from '../pages/list/list';
 import { DiagnosticsPage } from '../pages/diagnostics/diagnostics';
 import { SettingsPage } from '../pages/settings/settings';
-import { MaintenancePage } from './../pages/maintenance/maintenance';
+import { MaintenancePage, ModalContentPage } from './../pages/maintenance/maintenance';
 import { RecipesPage } from './../pages/recipes/recipes';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { IonicStorageModule } from '@ionic/storage';
 
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
@@ -52,6 +53,8 @@ import { ParticleIOSettingsTab } from '../pages/settings/particle';
 import { MiscSettingsTab } from '../pages/settings/misc';
 import { ParticleIoServiceProvider } from '../providers/particle-io-service/particle-io-service';
 import { DeviceSettingsTab } from '../pages/settings/devices';
+import { RecipeServiceProvider } from '../providers/recipe-service/recipe-service';
+import { StorageServiceProvider } from '../providers/storage-service/storage-service';
 
 @NgModule({
   declarations: [
@@ -63,12 +66,14 @@ import { DeviceSettingsTab } from '../pages/settings/devices';
     MaintenancePage,
     ParticleIOSettingsTab,
     MiscSettingsTab,
-    DeviceSettingsTab
+    DeviceSettingsTab,
+    ModalContentPage,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot(), 
     TranslateModule.forRoot({
       loader: {      
         provide: TranslateLoader,
@@ -88,17 +93,20 @@ import { DeviceSettingsTab } from '../pages/settings/devices';
     ParticleIOSettingsTab,
     MiscSettingsTab,
     DeviceSettingsTab,
+    ModalContentPage,
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    ParticleIoServiceProvider
+    ParticleIoServiceProvider,
+    RecipeServiceProvider,
+    StorageServiceProvider
   ]
 })
 export class AppModule {}
 
 
 export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http);
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }

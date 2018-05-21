@@ -41,11 +41,26 @@ SOFTWARE.
 </ion-header>
 
 <ion-content padding>
-  <h3>Ionic Menu Starter</h3>
-
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
-
-  <button ion-button secondary menuToggle>Toggle Menu</button>
+  
+ 
+  <ion-content *ngIf="connected">
+      <h4>Functions to be implemented here as a list of cards</h4>
+      
+      <ol>
+        <li>Brew a cup of coffee</li>
+        <li>Current brew status</li>
+        <li>Current water level</li>
+        <li>Current water temperature</li>
+        
+      </ol>  
+  </ion-content>
+  <ion-content *ngIf="!connected" style="text-align: center;">
+      <ion-item  style="text-align: center">
+          <ion-icon  name="thunderstorm" style="font-size: 8em; color: red; text-align: center;"></ion-icon>   
+      </ion-item>
+      <ion-item style="font-size:2em; color: red;">Device is Offline</ion-item>
+      <ion-item>Last Heard: {{device.last_heard}}</ion-item>
+  </ion-content>
+  
+  
 </ion-content>

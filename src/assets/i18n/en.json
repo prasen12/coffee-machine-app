@@ -1,6 +1,8 @@
 {
     "MAIN": {
-        "MENU": "Menu"
+        "MENU": "Menu",
+        "ERROR": "Error!",
+        "OK": "OK"
     },
     "NAVIGATION": {
         "HOME": "Home",
@@ -20,8 +22,17 @@
             "LOGIN_FAILED": "Failed to sign on to Particle.io"
         },
         "DEVICES": {
-            "NO_DEVICES": "No devices found. Make sure you have signed in to particle.io",
-            "ERROR": "Failed to get devices"
+            "NO_DEVICES": "No devices found.",
+            "ERROR": "Failed to get devices",
+            "REFRESH": "Reload Devices"
+        }
+    },
+    "MAINTENANCE": {
+        "COMMON": {
+            "START": "Flush The Water",
+            "STOP": "Stop Flushing The Water",
+            "EVENT_TIME": "Event Time",
+            "EVENT_LOG": "Events"
         }
     }
 } 

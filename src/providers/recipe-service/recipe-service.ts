@@ -23,29 +23,45 @@
  * 
  * 
  * 
- *  File Created: Monday, 14th May 2018 11:27:30 pm
+ *  File Created: Sunday, 20th May 2018 3:52:05 pm
  *  Author: Prasen Palvankar 
  * 
- *  Last Modified: Monday, 14th May 2018 11:27:30 pm
+ *  Last Modified: Sunday, 20th May 2018 11:57:40 pm
  *  Modified By: Prasen Palvankar 
- * 
- * 
  */
-import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
-import { Storage } from '@ionic/storage';
 
-@Component({
-    selector: 'page-diagnostics',
-    templateUrl: 'diagnostics.html'
-})
-export class DiagnosticsPage {
-    private selectedDeviceId: string;
 
-    constructor(public navCtrl: NavController,
-            public nacParams: NavParams,
-            private storage: Storage) {
-        
-    }
+import { Injectable } from '@angular/core';
+import { StorageServiceProvider } from '../storage-service/storage-service';
+
+@Injectable()
+export class RecipeServiceProvider {
+
+  private recipeList: Array<Recipe>;
+  constructor(private storageService: StorageServiceProvider) {
+    this.storageService.getData(StorageServiceProvider.RECIPE_LIST)
+      .then(recipeList => {
+        this.recipeList = recipeList;
+      })
+      .catch(error => {
+    this.recipeList = new Array<Recipe>();
+  });
 }
 
+}
+
+enum COLORS {
+  RED = "Red",
+  ORANGE = "Orange",
+  GREEN = "Green"
+}
+
+class Recipe {
+  public id: string;
+  public name: string;
+  public color: COLORS;
+  public temperature: number;
+  public coffeeQuantity: number;
+  public brewDuration: number;
+
+}

@@ -1,13 +1,51 @@
+<!--
+ MIT License
+
+Copyright (c) 2018 Prasen Palvankar
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software, and to permit persons to whom the Software is furnished to do
+so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+
+ File Created: Saturday, 19th May 2018 1:17:07 am
+ Author: Prasen Palvankar 
+
+ Last Modified: Sunday, 20th May 2018 11:55:58 pm
+ Modified By: Prasen Palvankar 
+-->
+
+
+
 <ion-content  padding>
-  <ion-title>Select Device</ion-title>
+  <ion-title>   
+    Select Device
+  </ion-title>
   <ion-list  radio-group>
     <ion-item *ngFor="let device of deviceList; first as isFirst; index as index">
       <ion-label>{{device.id}}</ion-label>
-      <ion-radio *ngIf="isFirst" checked="true" value="{{device.id}}"></ion-radio>
-      <ion-radio *ngIf="index > 0" checked="false" value="{{device.id}}"></ion-radio>
+     <!--
+        <ion-radio *ngIf="isFirst" checked="true" value="{{device.id}}" (click)="selectDevice(device)"></ion-radio>
+     -->
+      <ion-radio [checked]="isSelected(device)" value="{{device.id}}" (click)="selectDevice(device)"></ion-radio>
     </ion-item>
   </ion-list>  
   <p *ngIf="deviceList.length === 0"  >{{'SETTINGS.DEVICES.NO_DEVICES' | translate}}</p>
-  <button ion-button type="submit" color="secondary"  (click)="loadDevices()" block>Load Devices</button>
+  <button ion-button type="submit" color="secondary"  (click)="loadDevices()" block>{{'SETTINGS.DEVICES.REFRESH'| translate}}</button>
 
 </ion-content>

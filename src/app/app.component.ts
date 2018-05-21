@@ -53,7 +53,7 @@ export class MyApp {
 
   rootPage: any = HomePage;
 
-  pages: Array<{ title: string, component: any }>;
+  pages: Array<{ title: string, icon: string, component: any }>;
 
   constructor(public platform: Platform, public statusBar: StatusBar,
     public splashScreen: SplashScreen, private translateService: TranslateService) {
@@ -65,11 +65,11 @@ export class MyApp {
     
 
     this.pages = [
-      { title: 'NAVIGATION.HOME', component: HomePage },
-      { title: 'NAVIGATION.RECIPES', component: RecipesPage },
-      { title: 'NAVIGATION.MAINTENANCE', component: MaintenancePage },
-      { title: 'NAVIGATION.DIAGNOSTICS', component: DiagnosticsPage},
-      { title: 'NAVIGATION.SETTINGS', component: SettingsPage }
+      { title: 'NAVIGATION.HOME',       icon: 'home', component: HomePage },
+      { title: 'NAVIGATION.RECIPES',    icon: 'cafe', component: RecipesPage },
+      { title: 'NAVIGATION.MAINTENANCE', icon:'build', component: MaintenancePage },
+      { title: 'NAVIGATION.DIAGNOSTICS', icon: 'bug', component: DiagnosticsPage},
+      { title: 'NAVIGATION.SETTINGS', icon: 'settings', component: SettingsPage }
     ];
 
     //Translate menu titles
@@ -86,8 +86,6 @@ export class MyApp {
   initializeApp(translateService: TranslateService) {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
-
-      // Init translation service
       
     });
   }
