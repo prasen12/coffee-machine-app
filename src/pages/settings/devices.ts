@@ -35,7 +35,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { ParticleIoServiceProvider } from '../../providers/particle-io-service/particle-io-service';
 import { TranslateService } from '@ngx-translate/core';
-import { Storage } from '@ionic/storage';
+import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 
 @Component({
   selector: 'page-devicesSettingsTab',
@@ -48,24 +48,23 @@ export class DeviceSettingsTab {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private translateService: TranslateService,
-    private storage: Storage,
+    private storageService: StorageServiceProvider,
     private alertCtrl: AlertController,
     private particleIOService: ParticleIoServiceProvider) {
     this.deviceList = new Array<any>();
     this.selectedDeviceId = "";
 
-    storage.get('deviceList')
-      .then(deviceListStr => {
-        if (deviceListStr) {
-          this.deviceList = JSON.parse(deviceListStr);
+    storageService.getData(StorageServiceProvider.DEVICE_LIST)
+      .then(deviceList => {
+        if (deviceList) {
+          this.deviceList = deviceList
         }
       });
 
-    storage.get('selectedDevice')
-      .then(selectedDeviceStr => {
-        if (selectedDeviceStr) {
-          let d = JSON.parse(selectedDeviceStr);
-          this.selectedDeviceId = d.id;
+    storageService.getData(StorageServiceProvider.SELECTED_DEVICE)
+      .then(selectedDevice => {
+        if (selectedDevice) {         
+          this.selectedDeviceId = selectedDevice.id;
         }
         
       })
@@ -82,7 +81,7 @@ export class DeviceSettingsTab {
   }
 
   selectDevice(device: any) {
-    this.storage.set('selectedDevice', JSON.stringify(device));
+    this.storageService.putData(StorageServiceProvider.SELECTED_DEVICE, device);
     this.selectedDeviceId = device.id;
   }
 
@@ -93,11 +92,11 @@ export class DeviceSettingsTab {
   loadDevices() {
     this.particleIOService.getDevices()
       .then(deviceList => {
-        this.storage.remove('deviceList');
+        this.storageService.removeData(StorageServiceProvider.DEVICE_LIST);
         this.deviceList = deviceList;
-        this.storage.set('deviceList', JSON.stringify(deviceList));
+        this.storageService.putData(StorageServiceProvider.DEVICE_LIST, deviceList);
         // Save the first device as selected by default
-        this.storage.set('selectedDevice', JSON.stringify(deviceList[0]));
+        this.storageService.putData(StorageServiceProvider.SELECTED_DEVICE, deviceList[0]);
       })
       .catch(error => {
         let alert = this.alertCtrl.create({

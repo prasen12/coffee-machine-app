@@ -31,12 +31,12 @@
  */
 
 
-import { Storage } from '@ionic/storage';
 import { Component, OnInit } from '@angular/core';
 import { ParticleIoServiceProvider } from '../../providers/particle-io-service/particle-io-service';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { LoadingController, AlertController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
+import { StorageServiceProvider } from './../../providers/storage-service/storage-service';
 
 
 @Component({
@@ -52,7 +52,7 @@ export class ParticleIOSettingsTab implements OnInit {
 
     constructor(private particleIoService: ParticleIoServiceProvider,
         private formBuilder: FormBuilder,
-        private storage: Storage,
+        private storageService: StorageServiceProvider,
         private translateService: TranslateService,
         private alertCtl: AlertController,
         public loadingCtrl: LoadingController) {
@@ -73,16 +73,15 @@ export class ParticleIOSettingsTab implements OnInit {
 
         this.loginForm = this.formBuilder.group(
             {
-                userName: ['aa', Validators.required],
+                userName: ['', Validators.required],
                 password: ['', Validators.required]
             }
         )
 
         //Load from saved settings
-        this.storage.get('loginData')
-            .then(loginDataStr => {
-                if (loginDataStr) {
-                    let loginData = JSON.parse(loginDataStr);
+        this.storageService.getData(StorageServiceProvider.LOGIN_DATA)
+            .then(loginData => {
+                if (loginData) {                    
                     this.loginForm.setValue({ userName: loginData.username, password: '' });
                 }
             });
@@ -101,10 +100,10 @@ export class ParticleIOSettingsTab implements OnInit {
         loader.present();
         this.particleIoService.login(this.loginForm.value.userName, this.loginForm.value.password)
             .then((result) => {
-                // Save to local storage
+                // Save to local storageService
                 let loginData = { username: this.loginForm.value.userName, accessToken: result };
 
-                this.storage.set('loginData', JSON.stringify(loginData));
+                this.storageService.putData(StorageServiceProvider.LOGIN_DATA, loginData);
                 loader.dismiss();
 
                 this.showAlert(this.messages['SETTINGS.PARTICLE.SUCCESS'],

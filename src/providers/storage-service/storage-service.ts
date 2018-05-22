@@ -26,8 +26,6 @@
  *  File Created: Sunday, 20th May 2018 3:51:45 pm
  *  Author: Prasen Palvankar 
  * 
- *  Last Modified: Sunday, 20th May 2018 11:57:49 pm
- *  Modified By: Prasen Palvankar 
  */
 
 
@@ -61,6 +59,10 @@ export class StorageServiceProvider {
 
   putData(key: string, value:Object):void {
     this.storage.set(key, JSON.stringify(value));
+  }
+
+  removeData(key: string): void {
+    this.storage.remove(key);
   }
 
 }

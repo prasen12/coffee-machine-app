@@ -23,21 +23,23 @@
  * 
  * 
  * 
- *  File Created: Wednesday, 16th May 2018 10:44:46 pm
+ *  File Created: Monday, 21st May 2018 11:23:08 pm
  *  Author: Prasen Palvankar 
  * 
- *  Last Modified: Wednesday, 16th May 2018 10:46:32 pm
+ *  Last Modified: Monday, 21st May 2018 11:27:33 pm
  *  Modified By: Prasen Palvankar 
- * 
- * 
  */
+
+
+
+
+
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
-import { Storage } from '@ionic/storage';
-
 import { ParticleIoServiceProvider } from './../../providers/particle-io-service/particle-io-service';
+import { StorageServiceProvider } from './../../providers/storage-service/storage-service';
 
 @Component({
   selector: 'page-home',
@@ -51,7 +53,7 @@ export class HomePage {
   constructor(public navCtrl: NavController,
     private translateService: TranslateService,
     private alertCtrl: AlertController,
-    private storage: Storage,
+    private storage: StorageServiceProvider,
     private particleIOService: ParticleIoServiceProvider) {
 
     this.messages = {
@@ -65,10 +67,9 @@ export class HomePage {
         this.messages[messageId] = res;
       });
     }
-    storage.get('selectedDevice')
-      .then(selectedDeviceStr => {
-        if (selectedDeviceStr) {
-          let selectedDevice = JSON.parse(selectedDeviceStr);
+    this.storage.getData(StorageServiceProvider.SELECTED_DEVICE)
+      .then(selectedDevice => {
+        if (selectedDevice) {
           this.particleIOService.getDevice(selectedDevice.id)
             .then(device => {
               console.log(device);
