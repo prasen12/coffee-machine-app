@@ -37,7 +37,10 @@
 			"company": "Prasen Palvankar"
 		},
 		"psi-header.changes-tracking": {
-			"autoHeader": "autoSave"
+			"autoHeader": "autoSave",
+			"modDate": "Date Modified: ",
+			"modAuthor": "Modified By: ",
+			"isActive": true
 		}
 	}
 }

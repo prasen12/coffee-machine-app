@@ -23,36 +23,24 @@
  * 
  * 
  * 
- *  File Created: Monday, 14th May 2018 11:27:30 pm
+ *  File Created: Monday, 21st May 2018 11:12:54 pm
  *  Author: Prasen Palvankar 
  * 
- *  Last Modified: Monday, 14th May 2018 11:27:30 pm
+ *  Last Modified: Tuesday, 22nd May 2018 12:02:14 am
  *  Modified By: Prasen Palvankar 
- * 
- * 
  */
-import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
-import { Storage } from '@ionic/storage';
-import { MetricsTabPage } from '../metrics-tab/metrics-tab';
-import { ManualOperationsTabPage } from '../manual-operations-tab/manual-operations-tab';
 
-@Component({
-    selector: 'page-diagnostics',
-    templateUrl: 'diagnostics.html'
+
+import { NgModule } from '@angular/core';
+import { IonicPageModule } from 'ionic-angular';
+import { ManualOperationsTabPage } from './manual-operations-tab';
+
+@NgModule({
+  declarations: [
+    ManualOperationsTabPage,
+  ],
+  imports: [
+    IonicPageModule.forChild(ManualOperationsTabPage),
+  ],
 })
-export class DiagnosticsPage {
-    private selectedDeviceId: string;
-
-    public metricsTab: any;
-    public manualOperationsTab: any;
-
-    constructor(public navCtrl: NavController,
-            public nacParams: NavParams,
-            private storage: Storage) {
-        this.manualOperationsTab = ManualOperationsTabPage;
-        this.metricsTab = MetricsTabPage;
-
-    }
-}
-
+export class ManualOperationsTabPageModule {}

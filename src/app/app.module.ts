@@ -55,6 +55,8 @@ import { ParticleIoServiceProvider } from '../providers/particle-io-service/part
 import { DeviceSettingsTab } from '../pages/settings/devices';
 import { RecipeServiceProvider } from '../providers/recipe-service/recipe-service';
 import { StorageServiceProvider } from '../providers/storage-service/storage-service';
+import { MetricsTabPage } from '../pages/metrics-tab/metrics-tab';
+import { ManualOperationsTabPage } from '../pages/manual-operations-tab/manual-operations-tab';
 
 @NgModule({
   declarations: [
@@ -68,6 +70,8 @@ import { StorageServiceProvider } from '../providers/storage-service/storage-ser
     MiscSettingsTab,
     DeviceSettingsTab,
     ModalContentPage,
+    MetricsTabPage,
+    ManualOperationsTabPage
   ],
   imports: [
     BrowserModule,
@@ -94,6 +98,8 @@ import { StorageServiceProvider } from '../providers/storage-service/storage-ser
     MiscSettingsTab,
     DeviceSettingsTab,
     ModalContentPage,
+    MetricsTabPage,
+    ManualOperationsTabPage,
   ],
   providers: [
     StatusBar,

@@ -22,10 +22,12 @@
             "LOGIN_FAILED": "Failed to sign on to Particle.io"
         },
         "DEVICES": {
+            "TITLE": "Select Device",
             "NO_DEVICES": "No devices found.",
             "ERROR": "Failed to get devices",
             "REFRESH": "Reload Devices"
         }
+        
     },
     "MAINTENANCE": {
         "COMMON": {
