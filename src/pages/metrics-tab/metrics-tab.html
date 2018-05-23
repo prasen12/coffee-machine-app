@@ -29,15 +29,48 @@ SOFTWARE.
  Last Modified: Tuesday, 22nd May 2018 12:01:35 am
  Modified By: Prasen Palvankar 
 -->
-<ion-header>
-
-  <ion-navbar>
-    <ion-title>metricsTab</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-
 <ion-content padding>
+    
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content refreshingText="{{'MAIN.REFRESHING' | translate}}">
+        </ion-refresher-content>
+    </ion-refresher>
 
+    <ion-card>
+        <ion-card-header item-center
+        >
+            {{ 'DIAGNOSTICS.METRICS.RESERVOIR_TEMP' | translate }}
+        </ion-card-header>
+        <ion-card-content>
+            {{reservoirTemp}}
+        </ion-card-content>
+    </ion-card>
+    
+    <ion-card>
+        <ion-card-header>
+            {{'DIAGNOSTICS.METRICS.CIRC_TEMP' | translate}}
+        </ion-card-header>
+        <ion-card-content>
+            {{circulationTemp}}
+        </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+        <ion-card-header>
+            {{'DIAGNOSTICS.METRICS.LOADCELL' | translate}}
+        </ion-card-header>
+        <ion-card-content>
+            {{loadCellReading}}
+        </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+        <ion-card-header>
+            {{'DIAGNOSTICS.METRICS.TDS' | translate}}
+        </ion-card-header>
+        <ion-card-content>
+            {{tdsReading}}
+        </ion-card-content>
+    </ion-card>
+ 
 </ion-content>

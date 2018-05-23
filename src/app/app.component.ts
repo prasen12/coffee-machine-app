@@ -53,8 +53,8 @@ export class MyApp {
 
   rootPage: any = HomePage;
 
-  pages: Array<{ title: string, icon: string, component: any }>;
-
+  pages: Array<{ title: string, icon: string, component: any, color: string }>;
+  color = "red";
   constructor(public platform: Platform, public statusBar: StatusBar,
     public splashScreen: SplashScreen, private translateService: TranslateService) {
     this.initializeApp(translateService);
@@ -65,11 +65,11 @@ export class MyApp {
     
 
     this.pages = [
-      { title: 'NAVIGATION.HOME',       icon: 'home', component: HomePage },
-      { title: 'NAVIGATION.RECIPES',    icon: 'cafe', component: RecipesPage },
-      { title: 'NAVIGATION.MAINTENANCE', icon:'build', component: MaintenancePage },
-      { title: 'NAVIGATION.DIAGNOSTICS', icon: 'bug', component: DiagnosticsPage},
-      { title: 'NAVIGATION.SETTINGS', icon: 'settings', component: SettingsPage }
+      { title: 'NAVIGATION.HOME',       icon: 'home', component: HomePage , color: 'menu-home' },
+      { title: 'NAVIGATION.RECIPES',    icon: 'cafe', component: RecipesPage, color: 'menu-recipes' },
+      { title: 'NAVIGATION.MAINTENANCE', icon:'build', component: MaintenancePage,  color: 'menu-maintenance'},
+      { title: 'NAVIGATION.DIAGNOSTICS', icon: 'pr-stethoscope', component: DiagnosticsPage, color: 'menu-diagnostics'},
+      { title: 'NAVIGATION.SETTINGS', icon: 'settings', component: SettingsPage, color: 'menu-settings' }
     ];
 
     //Translate menu titles

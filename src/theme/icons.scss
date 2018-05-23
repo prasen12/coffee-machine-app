@@ -9,8 +9,7 @@
   font-style: normal;
 }
 
-[class^="ion-ios-"], [class*=" ion-ios-"],
-[class^="ion-md-"], [class*=" ion-md-"] {
+[class^="icon-"], [class*=" icon-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'icomoon' !important;
   speak: none;
@@ -25,45 +24,19 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.pr-cycle:before,
-.ion-ios-pr-cycle:before,
-.ion-ios-pr-cycle-outline:before,
-.ion-md-pr-cycle-:before,
-.ion-md-pr-cycle-outline:before {
-  content: "\e900";
+
+@mixin makeIcon($arg, $val) {
+  .pr-#{$arg}:before ,
+  .ion-ios-pr-#{$arg}:before ,
+  .ion-ios-pr-#{$arg}-outline:before ,
+  .ion-md-pr-#{$arg}:before ,
+  .ion-md-pr-#{$arg}-outline:before  {
+    content: $val;
+  }
 }
 
-.pr-drain:before
-.ion-ios-pr-drain:before,
-.ion-ios-pr-drain-outline:before,
-.ion-md-pr-drain-:before,
-.ion-md-pr-drain-outline:before {
-  content: "\e901";
-}
-
-
-.pr-temperature:before
-.ion-ios-pr-temperature:before,
-.ion-ios-pr-temperature-outline:before,
-.ion-md-pr-temperature-:before,
-.ion-md-pr-temperature-outline:before {
-  content: "\e902";
-}
-
-
-.pr-offline:before 
-.ion-ios-pr-offline:before,
-.ion-ios-pr-offline-outline:before,
-.ion-md-pr-offline:before,
-.ion-md-pr-offline-outline:before{
-  content: "\e903";
-  font-size: 26px;
-}
-
-.stethoscope:before
-.ion-ios-pr-stethoscope:before,
-.ion-ios-pr-stethoscope-outline:before,
-.ion-md-pr-stethoscope-:before,
-.ion-md-pr-stethoscope-outline:before {
-  content: "\e904";
-}
+@include makeIcon(cycle, "\e900");
+@include makeIcon(drain, "\e901");
+@include makeIcon(temperature, "\e902" );
+@include makeIcon(offline, "\e903");
+@include makeIcon(stethoscope, "\e904");

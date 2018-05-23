@@ -36,6 +36,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { MetricsTabPage } from '../metrics-tab/metrics-tab';
 import { ManualOperationsTabPage } from '../manual-operations-tab/manual-operations-tab';
+import { EventsTabPage } from '../events-tab/events-tab';
 
 @Component({
     selector: 'page-diagnostics',
@@ -46,13 +47,14 @@ export class DiagnosticsPage {
 
     public metricsTab: any;
     public manualOperationsTab: any;
+    public eventsTab: any;
 
     constructor(public navCtrl: NavController,
             public nacParams: NavParams,
             private storage: Storage) {
         this.manualOperationsTab = ManualOperationsTabPage;
         this.metricsTab = MetricsTabPage;
-
+        this.eventsTab = EventsTabPage;
     }
 }
 

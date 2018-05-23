@@ -34,14 +34,13 @@
 import { Storage } from '@ionic/storage';
 import { Injectable } from '@angular/core';
 import * as Particle from 'particle-api-js';
-/*
-  Generated class for the ParticleIoServiceProvider provider.
 
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class ParticleIoServiceProvider {
+  public static readonly DEVICE_VARIABLE_RESERVOIR_TEMP = 'tempRes';
+  public static readonly DEVICE_VARIABLE_CIRCULATION_TEMP = 'tempCir';
+  public static readonly DEVICE_VARIABLE_CHAMBER_FULL = 'chamberFull';
+
   private particleApi: Particle;
   private accessToken: string;
 
@@ -81,7 +80,10 @@ export class ParticleIoServiceProvider {
   }
 
   /**
-   * Get list of devices claimed
+   * Get list of devices
+   * 
+   * @returns {Promise<Array<any>>} 
+   * @memberof ParticleIoServiceProvider
    */
   getDevices(): Promise<Array<any>> {
     return new Promise((resolve, reject) => {
@@ -132,21 +134,126 @@ export class ParticleIoServiceProvider {
         deviceId: deviceId,
         name: 'flushWater',
         argument: arg
-      }).then (data => {
+      }).then(data => {
         this.particleApi.getEventStream({
           auth: this.accessToken,
           deviceId: deviceId,
           name: 'flush/chamber'
         })
-        .then (eventStream => resolve(eventStream))
-        .catch (error => reject(error));
+          .then(eventStream => resolve(eventStream))
+          .catch(error => reject(error));
       })
 
 
-        .catch(error=> reject(error));
+        .catch(error => reject(error));
 
     });
 
+  }
+
+  /**
+   * Get the Event stream for the device
+   * 
+   * @param {string} deviceId 
+   * @returns {Promise<any>} 
+   * @memberof ParticleIoServiceProvider
+   */
+  getEvents(deviceId: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.particleApi.getEventStream({
+        auth: this.accessToken,
+        deviceId: deviceId
+      })
+        .then(eventStream => resolve(eventStream))
+        .catch(error => reject(error));
+    });
+  }
+
+
+  /**
+   * Call the load cell fuction 
+   * 
+   * @param {string} deviceId 
+   * @param {string} operation  Operation values can be null, "raw" and "tare"
+   * @returns {Promise<any>} 
+   * @memberof ParticleIoServiceProvider
+   */
+  callLoadCell(deviceId: string, operation: string): Promise<any> {
+    let arg = operation ? "" : operation;
+    return new Promise((resolve, reject) => {
+      this.particleApi.callFunction({
+        auth: this.accessToken,
+        deviceId: deviceId,
+        name: 'loadCell',
+        argument: arg
+      })
+        .then(data => resolve(data.body.return_value))
+        .catch(error => reject(error));
+    });
+  }
+
+  /**
+   * Get the current load cell reading
+   * 
+   * @param {string} deviceId 
+   * @returns {Promise<any>} 
+   * @memberof ParticleIoServiceProvider
+   */
+  getLoadCellReading(deviceId: string): Promise<any> {
+    return this.callLoadCell(deviceId, null);
+  }
+
+  /**
+   * Sets the unladen weight
+   * 
+   * @param {string} deviceId 
+   * @returns {Promise<any>} 
+   * @memberof ParticleIoServiceProvider
+   */
+  setTareWeight(deviceId: string): Promise<any> {
+    return this.callLoadCell(deviceId, 'tare');
+  }
+
+  /**
+   * Get the TDS measurement
+   * 
+   * @param {string} deviceId 
+   * @returns {Promise<any>} 
+   * @memberof ParticleIoServiceProvider
+   */
+  getTDS(deviceId: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.particleApi.callFunction({
+        auth: this.accessToken,
+        deviceId: deviceId,
+        name: 'tds',
+        argument: ""
+      })
+        .then(data => resolve(data.body.return_value))
+        .catch(error => reject(error));
+    });
+  }
+
+  /**
+   * Get value of a device variable
+   * 
+   * @param {string} deviceId 
+   * @param {string} name 
+   * @returns {Promise<any>} 
+   * @memberof ParticleIoServiceProvider
+   */
+  getDeviceVariable(deviceId: string, name: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.particleApi.getVariable({
+        deviceId: deviceId,
+        auth: this.accessToken,
+        name: name
+      }).then((result) => {
+        resolve(result.body.result);
+      }).catch((err) => {
+        reject(err);
+      });
+    });
   }
 
 }

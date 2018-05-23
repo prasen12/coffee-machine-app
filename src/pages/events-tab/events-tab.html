@@ -23,30 +23,21 @@ SOFTWARE.
 
 
 
- File Created: Monday, 21st May 2018 11:05:58 pm
+ File Created: Tuesday, 22nd May 2018 8:05:42 am
  Author: Prasen Palvankar 
 
- Last Modified: Monday, 21st May 2018 11:06:01 pm
+ Last Modified: Tuesday, 22nd May 2018 5:00:40 pm
  Modified By: Prasen Palvankar 
 -->
 
-
-<ion-header>
-    <ion-navbar>
-        <button ion-button menuToggle>
-            <ion-icon name="menu"></ion-icon>
-        </button>
-        <ion-title>
-            {{ 'NAVIGATION.DIAGNOSTICS' | translate }}</ion-title>
-        
-    </ion-navbar>
-</ion-header>
-
 <ion-content padding>
-    <ion-tabs>
-        <ion-tab tabIcon="anayltics" [tabTitle]="'DIAGNOSTICS.METRICS.TITLE' | translate" [root]="metricsTab"></ion-tab>
-        <ion-tab tabIcon="flash" [tabTitle]="'DIAGNOSTICS.EVENTS.TITLE'|translate" [root]="eventsTab"></ion-tab>
-        <ion-tab tabIcon="cog" style="font-family: icomoon;"  [tabTitle]="'DIAGNOSTICS.FUNCTIONS.TITLE' | translate" [root]="manualOperationsTab"></ion-tab>  
-
-    </ion-tabs>
+  <ion-list>
+    <ion-list>
+      <ion-item *ngFor="let event of events">
+          <h2>{{ event.data }} </h2>
+          <h3>{{ event.name }} </h3>
+          <p>{{ 'DIAGNOSTICS.EVENTS.EVENT_TIME' | translate }}: {{ event.published_at }}</p>
+      </ion-item>
+  </ion-list>
+  </ion-list>
 </ion-content>

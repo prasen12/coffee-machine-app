@@ -2,7 +2,8 @@
     "MAIN": {
         "MENU": "Menu",
         "ERROR": "Error!",
-        "OK": "OK"
+        "OK": "OK",
+        "REFRESHING": "Refreshing"
     },
     "NAVIGATION": {
         "HOME": "Home",
@@ -35,6 +36,24 @@
             "STOP": "Stop Flushing The Water",
             "EVENT_TIME": "Event Time",
             "EVENT_LOG": "Events"
+        }
+    },
+    "DIAGNOSTICS": {
+        "TITLE": "Diagnostics",
+        "FUNCTIONS": {
+            "TITLE": "Functions"
+        },
+        "EVENTS": {
+            "TITLE": "Events",
+            "EVENT_TIME": "Timestamp"
+        },
+        "METRICS": {
+            "TITLE": "Metrics",
+            "ERROR": "Failed to read one or more device variables",
+            "RESERVOIR_TEMP": "Reservoir Temperature",
+            "CIRC_TEMP": "Circulation Temperature",
+            "LOADCELL": "Load Cell",
+            "TDS": "TDS Reading"
         }
     }
 } 

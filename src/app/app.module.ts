@@ -57,6 +57,7 @@ import { RecipeServiceProvider } from '../providers/recipe-service/recipe-servic
 import { StorageServiceProvider } from '../providers/storage-service/storage-service';
 import { MetricsTabPage } from '../pages/metrics-tab/metrics-tab';
 import { ManualOperationsTabPage } from '../pages/manual-operations-tab/manual-operations-tab';
+import { EventsTabPage } from '../pages/events-tab/events-tab';
 
 @NgModule({
   declarations: [
@@ -71,7 +72,8 @@ import { ManualOperationsTabPage } from '../pages/manual-operations-tab/manual-o
     DeviceSettingsTab,
     ModalContentPage,
     MetricsTabPage,
-    ManualOperationsTabPage
+    ManualOperationsTabPage,
+    EventsTabPage,
   ],
   imports: [
     BrowserModule,
@@ -100,6 +102,7 @@ import { ManualOperationsTabPage } from '../pages/manual-operations-tab/manual-o
     ModalContentPage,
     MetricsTabPage,
     ManualOperationsTabPage,
+    EventsTabPage,
   ],
   providers: [
     StatusBar,
