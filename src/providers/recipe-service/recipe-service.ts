@@ -44,9 +44,13 @@ export class RecipeServiceProvider {
         this.recipeList = recipeList;
       })
       .catch(error => {
-    this.recipeList = new Array<Recipe>();
-  });
-}
+        this.recipeList = new Array<Recipe>();
+      });
+  }
+  getRecipes(): Array<Recipe> {
+    return this.recipeList;
+
+  }
 
 }
 

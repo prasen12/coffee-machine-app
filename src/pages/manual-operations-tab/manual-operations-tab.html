@@ -24,21 +24,22 @@ SOFTWARE.
 
 
  File Created: Monday, 21st May 2018 11:12:54 pm
- Author: Prasen Palvankar 
+ Author: Prasen Palvankar
 
  Last Modified: Tuesday, 22nd May 2018 12:01:55 am
- Modified By: Prasen Palvankar 
+ Modified By: Prasen Palvankar
 -->
 
-<ion-header>
-
-  <ion-navbar>
-    <ion-title>manualOperationsTab</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-
 <ion-content padding>
+    <ion-list>
+        <ion-item>
+            <ion-label>{{ 'DIAGNOSTICS.FUNCTIONS.GRINDER' | translate }}</ion-label>
+            <ion-toggle [(ngModel)]="grinderState" color="secondary"></ion-toggle>
+        </ion-item>
+        <ion-item>
+                <ion-label>{{ 'DIAGNOSTICS.FUNCTIONS.LOADCELL' | translate }}</ion-label>
+                <button ion-button item-end color="primary" outline (click)="setLoadCellTare()">Set Tare</button>
+            </ion-item>
+    </ion-list>
 
 </ion-content>

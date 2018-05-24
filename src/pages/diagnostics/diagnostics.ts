@@ -43,15 +43,13 @@ import { EventsTabPage } from '../events-tab/events-tab';
     templateUrl: 'diagnostics.html'
 })
 export class DiagnosticsPage {
-    private selectedDeviceId: string;
 
     public metricsTab: any;
     public manualOperationsTab: any;
     public eventsTab: any;
 
     constructor(public navCtrl: NavController,
-            public nacParams: NavParams,
-            private storage: Storage) {
+            public nacParams: NavParams) {
         this.manualOperationsTab = ManualOperationsTabPage;
         this.metricsTab = MetricsTabPage;
         this.eventsTab = EventsTabPage;

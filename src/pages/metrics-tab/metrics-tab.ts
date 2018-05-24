@@ -101,14 +101,14 @@ export class MetricsTabPage {
         })
         .catch((err) => {
           console.error(err);
-          this.showALert(this.messages['DIAGNOSTICS.METRICS.ERROR'], err.message);
+          this.showAlert(this.messages['DIAGNOSTICS.METRICS.ERROR'], err.message);
           reject();
         });
     });
 
   }
 
-  showALert(title, subtitle) {
+  showAlert(title, subtitle) {
     let alert = this.alertCtrl.create({
       title: title,
       subTitle: subtitle,

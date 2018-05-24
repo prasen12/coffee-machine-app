@@ -3,7 +3,8 @@
         "MENU": "Menu",
         "ERROR": "Error!",
         "OK": "OK",
-        "REFRESHING": "Refreshing"
+        "REFRESHING": "Refreshing",
+        "NO_DEVICE_SELECTED": "No device has been selected. Use Settings option to select device"
     },
     "NAVIGATION": {
         "HOME": "Home",
@@ -28,7 +29,7 @@
             "ERROR": "Failed to get devices",
             "REFRESH": "Reload Devices"
         }
-        
+
     },
     "MAINTENANCE": {
         "COMMON": {
@@ -41,7 +42,15 @@
     "DIAGNOSTICS": {
         "TITLE": "Diagnostics",
         "FUNCTIONS": {
-            "TITLE": "Functions"
+            "HEADER": "Manual Controls",
+            "TITLE": "Functions",
+            "GRINDER": "Grinder",
+            "LOADCELL": "Load Cell",
+            "GRINDER_STARTED": "Grinder started",
+            "GRINDER_OPERATION_FAILED": "Grinder operation failed",
+            "TARE_OPERATION_FAILED": "Loadcell operation failed",
+            "TARE_SET": "Loadcell unladen weight reset successfully."
+
         },
         "EVENTS": {
             "TITLE": "Events",
@@ -56,4 +65,4 @@
             "TDS": "TDS Reading"
         }
     }
-} 
+}
