@@ -41,15 +41,20 @@
     },
     "DIAGNOSTICS": {
         "TITLE": "Diagnostics",
-        "FUNCTIONS": {
+        "OPERATIONS": {
             "HEADER": "Manual Controls",
-            "TITLE": "Functions",
+            "TITLE": "Operations",
             "GRINDER": "Grinder",
             "LOADCELL": "Load Cell",
             "GRINDER_STARTED": "Grinder started",
+            "GRINDER_STOPPED": "Grinder stopped",
             "GRINDER_OPERATION_FAILED": "Grinder operation failed",
             "TARE_OPERATION_FAILED": "Loadcell operation failed",
-            "TARE_SET": "Loadcell unladen weight reset successfully."
+            "TARE_SET": "Loadcell unladen weight reset successfully.",
+            "MOTORS": "Shaker Motors",
+            "MOTORS_STARTED": "Two motors started",
+            "MOTORS_STOPPED": "Two motors stopped",
+            "MOTORS_OPERATION_FAILED": "One or both motors failed to start"
 
         },
         "EVENTS": {

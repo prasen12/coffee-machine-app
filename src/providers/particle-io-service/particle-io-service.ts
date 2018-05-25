@@ -260,6 +260,11 @@ export class ParticleIoServiceProvider {
         });
     }
 
+    /**
+     * Turn the grinder on/off
+     * @param {string} deviceId
+     * @param {boolean} start
+     */
     operateGrinder(deviceId: string, start: boolean): Promise<any> {
         let arg = start ? 'on' : 'off';
         return new Promise((resolve, reject) => {
@@ -267,6 +272,28 @@ export class ParticleIoServiceProvider {
                 auth: this.accessToken,
                 deviceId: deviceId,
                 name: 'grinder',
+                argument: arg
+            }).then((result) => {
+                resolve(result.body.return_value)
+            }).catch((err) => {
+                reject(err);
+            });
+        });
+    }
+
+    /**
+     * Turn on/off one of the motors
+     * @param {string} deviceId
+     * @param {number} motorNumber
+     * @param {boolean} start
+     */
+    operateMotor(deviceId: string, motorNumber: number, start: boolean): Promise<any> {
+        let arg = `${motorNumber},${start ? "on": "off"}`
+        return new Promise((resolve, reject) => {
+            this.particleApi.callFunction({
+                auth: this.accessToken,
+                deviceId: deviceId,
+                name: 'motor',
                 argument: arg
             }).then((result) => {
                 resolve(result.body.return_value)

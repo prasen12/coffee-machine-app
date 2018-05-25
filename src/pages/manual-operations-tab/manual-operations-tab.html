@@ -33,13 +33,19 @@ SOFTWARE.
 <ion-content padding>
     <ion-list>
         <ion-item>
-            <ion-label>{{ 'DIAGNOSTICS.FUNCTIONS.GRINDER' | translate }}</ion-label>
+            <ion-label>{{ 'DIAGNOSTICS.OPERATIONS.GRINDER' | translate }}</ion-label>
             <ion-toggle [(ngModel)]="grinderState" color="secondary"></ion-toggle>
         </ion-item>
+
         <ion-item>
-                <ion-label>{{ 'DIAGNOSTICS.FUNCTIONS.LOADCELL' | translate }}</ion-label>
-                <button ion-button item-end color="primary" outline (click)="setLoadCellTare()">Set Tare</button>
-            </ion-item>
+            <ion-label>{{ 'DIAGNOSTICS.OPERATIONS.LOADCELL' | translate }}</ion-label>
+            <button ion-button item-end color="primary" outline (click)="setLoadCellTare()">Set Tare</button>
+        </ion-item>
+
+        <ion-item>
+            <ion-label>{{ 'DIAGNOSTICS.OPERATIONS.MOTORS' | translate }}</ion-label>
+            <ion-toggle [(ngModel)]="motorsState" color="secondary"></ion-toggle>
+        </ion-item>
     </ion-list>
 
 </ion-content>
