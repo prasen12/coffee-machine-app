@@ -45,7 +45,7 @@ SOFTWARE.
       <ion-item *ngFor="let event of events">
           <h2>{{ event.data }} </h2>
           <h3>{{ event.name }} </h3>
-          <p>{{ 'DIAGNOSTICS.EVENTS.EVENT_TIME' | translate }}: {{ event.published_at }}</p>
+          <p>{{ getEventTimeFromNow(event.published_at) }}</p>
       </ion-item>
   </ion-list>
   </ion-list>

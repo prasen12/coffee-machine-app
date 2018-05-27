@@ -37,7 +37,7 @@ import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { ParticleIoServiceProvider } from '../../providers/particle-io-service/particle-io-service';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 import { TranslateService } from '@ngx-translate/core';
-
+import * as moment from 'moment';
 
 @Component({
     selector: 'page-events-tab',
@@ -155,8 +155,10 @@ export class EventsTabPage {
             this.particleIOService.stopEventLog();
             this.showToast(this.messages['DIAGNOSTICS.EVENTS.EVENT_LOG_STOPPED']);
         }
+    }
 
-
+    getEventTimeFromNow(dateTime: string): string {
+        return (moment(dateTime).fromNow());
     }
 
 
