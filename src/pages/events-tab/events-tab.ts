@@ -1,3 +1,4 @@
+import { ToastController } from 'ionic-angular';
 /**
  *  MIT License
  *
@@ -39,76 +40,127 @@ import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
-  selector: 'page-events-tab',
-  templateUrl: 'events-tab.html',
+    selector: 'page-events-tab',
+    templateUrl: 'events-tab.html',
 })
 export class EventsTabPage {
-  private readonly MAX_EVENTS = 1000;
-  private selectedDevice: any;
-  private messages: any;
-  public events: Array<any>;
+    private selectedDevice: any;
+    private messages: any;
+    public events: Array<any>;
 
-  constructor(public navCtrl: NavController,
-    public navParams: NavParams,
-    private alertCtrl: AlertController,
-    private translateService: TranslateService,
-    private particleIOService: ParticleIoServiceProvider,
-    private storageService: StorageServiceProvider) {
+    constructor(public navCtrl: NavController,
+        public navParams: NavParams,
+        private alertCtrl: AlertController,
+        private toastCtrl: ToastController,
+        private translateService: TranslateService,
+        private particleIOService: ParticleIoServiceProvider,
+        private storageService: StorageServiceProvider) {
 
 
-    this.messages = {
-      'MAIN.ERROR': '',
-      'MAIN.OK': '',
-      'DIAGNOSTICS.EVENTS.ERROR': ''
-    };
-    for (let messageId in this.messages) {
-      this.translateService.get(messageId).subscribe(res => {
-        this.messages[messageId] = res;
-      });
+        this.translate();
+
+        this.events = new Array();
+
+        this.storageService.getData(StorageServiceProvider.SELECTED_DEVICE)
+            .then(selectedDevice => {
+                this.selectedDevice = selectedDevice;
+                // Get the current event log
+                this.events = this.particleIOService.getEventLog();
+            });
+
     }
 
-    this.storageService.getData(StorageServiceProvider.SELECTED_DEVICE)
-      .then(selectedDevice => {
-        this.selectedDevice = selectedDevice;
-        // Subscribe to new events
-        this.particleIOService.getEvents(this.selectedDevice.id)
-          .then((eventStream) => {
-            eventStream.on('event', eventData => {
-              this.events.unshift(eventData);
-              if (this.events.length > this.MAX_EVENTS) {
-                this.events.splice(this.MAX_EVENTS - 1, 1);
-              }
+    /**
+     * Translate string used in dialogs and pop-ups
+     *
+     * @private
+     * @memberof EventsTabPage
+     */
+    private translate() {
+        this.messages = {
+            'MAIN.ERROR': '',
+            'MAIN.OK': '',
+            'DIAGNOSTICS.EVENTS.ERROR': '',
+            'DIAGNOSTICS.EVENTS.EVENT_LISTENER_STARTED': '',
+            'DIAGNOSTICS.EVENTS.EVENT_LOG_STOPPED': '',
+            'DIAGNOSTICS.EVENTS.EVENT_LOG_STARTED': ''
+
+        };
+        for (let messageId in this.messages) {
+            this.translateService.get(messageId).subscribe(res => {
+                this.messages[messageId] = res;
             });
-          }).catch((err) => {
-            console.error(err);
-            this.showAlert(this.messages['DIAGNOSTICS.EVENTS.ERROR'], err.message);
-          });
-      });
-    this.events = new Array();
+        }
+    }
 
-    //TODO: Keep a FIFO list of events. Need to add an option settings for the ParticleIOServiceProvider
-    //     to subscribe/unsubscribe to events so that the events will keep on getting collected
-    //     while the app is running
-    this.loadEventsHistory();
+    /**
+    * Show the alert pop-up
+    *
+    * @private
+    * @param {any} title
+    * @param {any} subtitle
+    * @memberof EventsTabPage
+    */
+    private showAlert(title, subtitle) {
+        let alert = this.alertCtrl.create({
+            title: title,
+            subTitle: subtitle,
+            buttons: [this.messages['MAIN.OK']]
+        });
+        alert.present();
+    }
+
+    /**
+     * Show message as a toast
+     *
+     * @private
+     * @param {string} message
+     * @memberof EventsTabPage
+     */
+    private showToast(message: string) {
+        let toast = this.toastCtrl.create({
+            message: message,
+            cssClass: 'events-toast',
+            position: 'middle',
+            duration: 5000
+        });
+        toast.present();
+    }
+
+    /**
+     * Get current state of the of the event logging
+     *
+     * @type {boolean}
+     * @memberof EventsTabPage
+     */
+    get loggingActive(): boolean {
+        return this.particleIOService.isEventStreamActive();
+    }
+
+    /**
+     * Turn event logging on/off
+     * Bound to the toggle
+     *
+     * @memberof EventsTabPage
+     */
+    set loggingActive(doEventLogging: boolean) {
+        if (doEventLogging) {
+            this.particleIOService.startEventLog(this.selectedDevice.id)
+            .then(() => {
+                this.showToast(this.messages['DIAGNOSTICS.EVENTS.EVENT_LOG_STARTED']);
+            }).catch((err) => {
+                this.showAlert(this.messages['DIAGNOSTICS.EVENTS.EVENT_LOG_ERROR'], err.message);
+            });
+        } else {
+            this.particleIOService.stopEventLog();
+            this.showToast(this.messages['DIAGNOSTICS.EVENTS.EVENT_LOG_STOPPED']);
+        }
+
+
+    }
 
 
 
-  }
 
-  /**
-   *
-   * Load events already received
-   */
-  loadEventsHistory() {
-    //TODO: need implementation in particleIOService
-  }
 
-  showAlert(title, subtitle) {
-    let alert = this.alertCtrl.create({
-      title: title,
-      subTitle: subtitle,
-      buttons: [this.messages['MAIN.OK']]
-    });
-    alert.present();
-  }
 }

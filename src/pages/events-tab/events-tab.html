@@ -24,13 +24,22 @@ SOFTWARE.
 
 
  File Created: Tuesday, 22nd May 2018 8:05:42 am
- Author: Prasen Palvankar 
+ Author: Prasen Palvankar
 
  Last Modified: Tuesday, 22nd May 2018 5:00:40 pm
- Modified By: Prasen Palvankar 
+ Modified By: Prasen Palvankar
 -->
 
-<ion-content padding>
+ <ion-header>
+
+       <ion-item>
+            <ion-label><h2>{{ 'DIAGNOSTICS.EVENTS.EVENT_LISTENER' | translate }}</h2></ion-label>
+            <ion-toggle  [(ngModel)]="loggingActive" color="secondary" checked=false></ion-toggle>
+       </ion-item>
+  </ion-header>
+<ion-content padding id="page-events-tab">
+
+  <span class="err-message" *ngIf="events.length === 0 && loggingActive">Events log is empty</span>
   <ion-list>
     <ion-list>
       <ion-item *ngFor="let event of events">

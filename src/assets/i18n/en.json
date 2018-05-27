@@ -59,7 +59,11 @@
         },
         "EVENTS": {
             "TITLE": "Events",
-            "EVENT_TIME": "Timestamp"
+            "EVENT_TIME": "Timestamp",
+            "EVENT_LISTENER": "Event Listener",
+            "EVENT_LOG_STARTED": "Event listener is now on",
+            "EVENT_LOG_STOPPED": "Event listener turned off.",
+            "EVENT_LOG_ERROR": "Failed to turn on Event Listener"
         },
         "METRICS": {
             "TITLE": "Metrics",

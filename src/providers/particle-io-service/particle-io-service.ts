@@ -40,9 +40,12 @@ export class ParticleIoServiceProvider {
     public static readonly DEVICE_VARIABLE_RESERVOIR_TEMP = 'tempRes';
     public static readonly DEVICE_VARIABLE_CIRCULATION_TEMP = 'tempCir';
     public static readonly DEVICE_VARIABLE_CHAMBER_FULL = 'chamberFull';
+    private readonly EVENT_LOG_SIZE = 100;
 
     private particleApi: Particle;
     private accessToken: string;
+    private eventLog: Array<any>;
+    private eventStream: any;
 
     /**
      * Constructor
@@ -50,6 +53,7 @@ export class ParticleIoServiceProvider {
      */
     constructor(private storage: Storage) {
         this.particleApi = new Particle();
+        this.eventLog = new Array();
         this.storage.get('loginData')
             .then(loginDataStr => {
                 if (loginDataStr) {
@@ -120,6 +124,66 @@ export class ParticleIoServiceProvider {
                     });
             }
         });
+    }
+
+    /**
+     * Start logging the events for given device
+     *
+     * @param {string} deviceId
+     * @memberof ParticleIoServiceProvider
+     */
+    startEventLog(deviceId: string):Promise<any> {
+        return new Promise((resolve, reject) => {
+            if (!this.eventStream) {
+                this.getEvents(deviceId)
+                    .then((eventStream) => {
+                        this.eventStream = eventStream;
+                        this.eventStream.on('event', (event) => {
+                            if (this.eventLog.length >= this.EVENT_LOG_SIZE) {
+                                this.eventLog.pop();
+                            }
+                            this.eventLog.unshift(event);
+                        })
+                        resolve()
+                    }).catch((err) => {
+                        reject(err);
+                    });
+
+            }
+        });
+
+
+    }
+
+    /**
+     * Returns the event log
+     *
+     * @returns {Array<any>}
+     * @memberof ParticleIoServiceProvider
+     */
+    getEventLog():Array<any>{
+        return this.eventLog;
+    }
+
+    /**
+     * Return true if event stream is active
+     *
+     * @returns {boolean}
+     * @memberof ParticleIoServiceProvider
+     */
+    isEventStreamActive():boolean {
+        return (this.eventStream !== undefined && this.eventStream !== null);
+    }
+
+    /**
+     * Clear the event log and stop listening for new events
+     *
+     * @memberof ParticleIoServiceProvider
+     */
+    stopEventLog() {
+        this.eventStream.removeAllListeners();
+        this.eventStream = null;
+        this.eventLog.splice(0, this.eventLog.length);
     }
 
     /**

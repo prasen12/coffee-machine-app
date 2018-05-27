@@ -1,3 +1,19 @@
 page-events-tab {
-
+    .err-message {
+        font-size: 1.5em;
+        color: map-get($colors, danger);
+    }
+    .list .item h2 {
+        color: map-get($colors, events-text)
+    }
+    .list .item h3 {
+        color: map-get($colors, events-name)
+    }
 }
+.events-toast {
+    .toast-wrapper{
+      background-color: map-get($colors, secondary);
+      opacity: 0.8;
+      font-weight: bold;
+    }
+  }
