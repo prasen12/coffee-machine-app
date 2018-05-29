@@ -1,18 +1,18 @@
 /*
  *  MIT License
- * 
+ *
  * Copyright (c) 2018 Prasen Palvankar
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
  * the Software without restriction, including without limitation the rights to
  * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
  * of the Software, and to permit persons to whom the Software is furnished to do
  * so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -20,16 +20,16 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- * 
- * 
- * 
+ *
+ *
+ *
  *  File Created: Tuesday, 15th May 2018 12:04:46 am
- *  Author: Prasen Palvankar 
- * 
+ *  Author: Prasen Palvankar
+ *
  *  Last Modified: Tuesday, 15th May 2018 12:04:49 am
- *  Modified By: Prasen Palvankar 
- * 
- * 
+ *  Modified By: Prasen Palvankar
+ *
+ *
  */
 
 import { Component, ViewChild } from '@angular/core';
@@ -62,11 +62,11 @@ export class MyApp {
     this.translateService.setDefaultLang('en');
     this.translateService.use('en');
 
-    
+
 
     this.pages = [
-      { title: 'NAVIGATION.HOME',       icon: 'home', component: HomePage , color: 'menu-home' },
-      { title: 'NAVIGATION.RECIPES',    icon: 'cafe', component: RecipesPage, color: 'menu-recipes' },
+      { title: 'NAVIGATION.HOME',       icon: 'cafe', component: HomePage , color: 'menu-home' },
+      { title: 'NAVIGATION.RECIPES',    icon: 'flask', component: RecipesPage, color: 'menu-recipes' },
       { title: 'NAVIGATION.MAINTENANCE', icon:'build', component: MaintenancePage,  color: 'menu-maintenance'},
       { title: 'NAVIGATION.DIAGNOSTICS', icon: 'pr-stethoscope', component: DiagnosticsPage, color: 'menu-diagnostics'},
       { title: 'NAVIGATION.SETTINGS', icon: 'settings', component: SettingsPage, color: 'menu-settings' }
@@ -74,19 +74,19 @@ export class MyApp {
 
     //Translate menu titles
     this.pages.forEach((page) => {
-      translateService.get(page.title).subscribe((res: string) => {          
-          page.title = res;    
+      translateService.get(page.title).subscribe((res: string) => {
+          page.title = res;
       });
     });
 
-   
+
 
   }
 
   initializeApp(translateService: TranslateService) {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
-      
+
     });
   }
 

@@ -24,10 +24,10 @@ SOFTWARE.
 
 
  File Created: Monday, 14th May 2018 11:20:07 pm
- Author: Prasen Palvankar 
+ Author: Prasen Palvankar
 
  Last Modified: Monday, 14th May 2018 11:22:20 pm
- Modified By: Prasen Palvankar 
+ Modified By: Prasen Palvankar
 
 
 -->
@@ -43,5 +43,48 @@ SOFTWARE.
 </ion-header>
 
 <ion-content padding>
-    Placeholder for Recipe management
+    <ion-fab bottom right>
+        <button ion-fab>
+            <ion-icon name="arrow-dropleft"></ion-icon>
+        </button>
+        <ion-fab-list side="left">
+            <button ion-fab color="secondary" (click)="addRecipe()">
+                <ion-icon name="add"></ion-icon>
+            </button>
+            <button *ngIf="storedRecipes && storedRecipes.length > 1" ion-fab color="recipe-reorder" (click)="reorder()">
+                <ion-icon name="reorder"></ion-icon>
+            </button>
+        </ion-fab-list>
+    </ion-fab>
+    <ion-list>
+        <ion-item-divider color="dark">{{ 'RECIPES.STORED_ON_MACHINE' | translate }} </ion-item-divider>
+        <ion-item-group [reorder]="reorderEnabled">
+
+            <ion-item *ngFor="let recipe of storedRecipes">
+                <h2>{{recipe.name}}</h2>
+                <p [translate]="'RECIPES.LAST_UPDATED'" [translateParams]="{value: getUpdatedTimeFromNow(recipe.lastUpatedDate)}"></p>
+            </ion-item>
+            <ion-item *ngIf="storedRecipes && storedRecipes.length === 0">
+                {{ 'RECIPES.NO_STORED_RECIPES' | translate}}
+            </ion-item>
+            <ion-item *ngIf="storedRecipes === undefined">
+                {{ 'MAIN.LOADING' | translate}}
+            </ion-item>
+        </ion-item-group>
+        <ion-item-divider color="dark">{{ 'RECIPES.STORED_LOCALLY' | translate }}</ion-item-divider>
+        <ion-item-group>
+            <ion-item *ngFor="let recipe of localRecipes">
+                <h2>{{recipe.name}}</h2>
+                <p [translate]="'RECIPES.LAST_UPDATED'" [translateParams]="{value: getUpdatedTimeFromNow(recipe.lastUpatedDate)}"></p>
+            </ion-item>
+            <ion-item *ngIf="localRecipes && localRecipes.length === 0">
+                {{ 'RECIPES.NO_LOCAL_RECIPES' | translate}}
+            </ion-item>
+            <ion-item *ngIf="localRecipes === undefined">
+                {{ 'MAIN.LOADING' | translate}}
+            </ion-item>
+
+        </ion-item-group>
+    </ion-list>
+
 </ion-content>

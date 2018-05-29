@@ -39,15 +39,20 @@ $colors: (
   danger:     #f53d3d,
   light:      #f4f4f4,
   dark:       #222,
-  menu-home:       rgb(0, 132, 255),
+  coffee:      rgb(85, 27, 27),
+  coffee-quantity: rgba(253, 218, 16, 0.911),
+  coffee-timer: rgb(124, 26, 170),
+  coffee-tds: rgb(14, 122, 150),
+  menu-home:       rgb(112, 42, 2),
   menu-diagnostics:  rgba(255, 51, 0, 0.952),
-  menu-recipes:    rgb(112, 42, 2),
+  menu-recipes:    rgb(0, 132, 255),
   menu-settings: rgb(29, 151, 39),
   menu-maintenance: rgb(114, 74, 223),
   metrics-value: rgb(124, 9, 177),
   metrics-header: rgb(41, 38, 38),
   events-text:  rgb(72, 122, 49),
-  events-name: rgb(27, 91, 163)
+  events-name: rgb(27, 91, 163),
+  recipe-reorder: rgb(187, 104, 36)
 
 );
 

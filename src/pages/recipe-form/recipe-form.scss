@@ -1,0 +1,15 @@
+page-recipe-form {
+    ion-menu .scroll-content{
+        overflow-y: auto; // or "overflow: auto;"
+    }
+
+    ion-input .text-input {
+        font-size: large;
+        margin: 0;
+        padding: 0;
+    }
+    #name-label {
+        margin: 0;
+        padding: 0;
+    }
+}

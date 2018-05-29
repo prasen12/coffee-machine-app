@@ -4,6 +4,8 @@
         "ERROR": "Error!",
         "OK": "OK",
         "REFRESHING": "Refreshing",
+        "LOADING": "Loading ...",
+        "SAVE": "Save",
         "NO_DEVICE_SELECTED": "No device has been selected. Use Settings option to select device"
     },
     "NAVIGATION": {
@@ -12,6 +14,26 @@
         "SETTINGS": "Settings",
         "RECIPES": "Recipes",
         "MAINTENANCE": "Maintenance"
+    },
+    "RECIPES": {
+        "STORED_ON_MACHINE": "Stored on your coffee machine",
+        "STORED_LOCALLY": "Stored locally on your mobile device",
+        "NO_STORED_RECIPES": "No recipes stored on the machine",
+        "NO_LOCAL_RECIPES": "No recipes stored on the mobile device",
+        "REORDER_HINT": "You can now reorder the recipes stored on the machine",
+        "NEW_RECIPE_TITLE": "Create New Recipe",
+        "NEW_RECIPE_SAVED": "New recipe created",
+        "LAST_UPDATED": "Last updated {{value}}",
+        "LABELS": {
+            "NAME": "Name",
+            "CUP_SIZE": "Cup Size",
+            "WEIGHT": "Coffee Quantity (gms)",
+            "TEMPERATURE": "Water Temperature (F)",
+            "TDS": "Total Dissolved Solids (ppm)",
+            "DURATION": "Brew Duration (minutes)"
+        }
+
+
     },
     "SETTINGS": {
         "PARTICLE": {

@@ -1,0 +1,108 @@
+<!--
+  Generated template for the RecipeFormPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>{{ 'RECIPES.NEW_RECIPE_TITLE'| translate}}</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <form [formGroup]="addRecipeForm" (ngSubmit)="submit()">
+        <ion-list>
+            <ion-list-header id="name-label">
+                {{ 'RECIPES.LABELS.NAME' | translate }}
+            </ion-list-header>
+            <ion-item  >
+                <ion-input name="name" type="text" formControlName="name"></ion-input>
+            </ion-item>
+        </ion-list>
+        <ion-list>
+            <ion-list-header>
+                {{ 'RECIPES.LABELS.CUP_SIZE' | translate }}
+                <ion-badge item-end color="coffee">{{addRecipeForm.controls.cupSize.value}}</ion-badge>
+            </ion-list-header>
+            <ion-item>
+                <ion-icon color="coffee" item-start name="cafe"></ion-icon>
+                <ion-range color="coffee" name="cupSize" formControlName="cupSize" snaps="true" [min]="CUP_SIZE_RANGE[0]" [max]="CUP_SIZE_RANGE[1]"
+                    [step]="CUP_SIZE_RANGE[2]">
+                    <ion-label range-left>{{CUP_SIZE_RANGE[0]}}</ion-label>
+                    <ion-label range-right>{{CUP_SIZE_RANGE[1]}}</ion-label>
+                </ion-range>
+            </ion-item>
+        </ion-list>
+
+        <ion-list>
+            <ion-list-header>
+                {{ 'RECIPES.LABELS.WEIGHT' | translate }}
+                <ion-badge item-end color="coffee-quantity">{{addRecipeForm.controls.coffeeQuantity.value}}</ion-badge>
+            </ion-list-header>
+            <ion-item>
+                <ion-icon color="coffee-quantity" item-start name="basket"></ion-icon>
+                <ion-range color="coffee-quantity" name="coffeeQuantity" formControlName="coffeeQuantity" snaps="true" [min]="COFFEE_WEIGHT_RANGE[0]"
+                    [max]="COFFEE_WEIGHT_RANGE[1]" [step]="COFFEE_WEIGHT_RANGE[2]">
+                    <ion-label range-left>{{COFFEE_WEIGHT_RANGE[0]}}</ion-label>
+                    <ion-label range-right>{{COFFEE_WEIGHT_RANGE[1]}}</ion-label>
+                </ion-range>
+
+            </ion-item>
+        </ion-list>
+
+        <ion-list>
+            <ion-list-header>
+                {{ 'RECIPES.LABELS.TEMPERATURE' | translate }}
+                <ion-badge item-end color="danger">{{addRecipeForm.controls.temperature.value}}</ion-badge>
+            </ion-list-header>
+            <ion-item>
+                <ion-icon color="danger" item-start name="thermometer"></ion-icon>
+
+                <ion-range name="temperature" color="danger" formControlName="temperature" snaps="true" [min]="TEMPERATURE_RANGE_F[0]" [max]="TEMPERATURE_RANGE_F[1]"
+                    [step]="TEMPERATURE_RANGE_F[2]">
+                    <ion-label range-left>{{TEMPERATURE_RANGE_F[0]}}</ion-label>
+                    <ion-label range-right>{{TEMPERATURE_RANGE_F[1]}}</ion-label>
+                </ion-range>
+            </ion-item>
+        </ion-list>
+
+        <ion-list>
+            <ion-list-header>
+                {{ 'RECIPES.LABELS.TDS' | translate }}
+                <ion-badge item-end color="coffee-tds">{{addRecipeForm.controls.tds.value}}</ion-badge>
+            </ion-list-header>
+            <ion-item>
+                <ion-icon color="coffee-tds" item-start name="beaker"></ion-icon>
+
+                <ion-range name="tds" formControlName="tds" color="coffee-tds" snaps="true" [min]="TDS_RANGE[0]" [max]="TDS_RANGE[1]" [step]="TDS_RANGE[2]">
+                    <ion-label range-left>{{TDS_RANGE[0]}}</ion-label>
+                    <ion-label range-right>{{TDS_RANGE[1]}}</ion-label>
+                </ion-range>
+            </ion-item>
+        </ion-list>
+
+        <ion-list>
+            <ion-list-header>
+                {{ 'RECIPES.LABELS.DURATION' | translate }}
+                <ion-badge item-end color="coffee-timer">{{addRecipeForm.controls.brewDuration.value}}</ion-badge>
+            </ion-list-header>
+            <ion-item>
+                <ion-icon color="coffee-timer" item-start name="timer"></ion-icon>
+
+                <ion-range name="brewDuration" color="coffee-timer" formControlName="brewDuration" snaps="true" [min]="BREW_TIME_RANGE[0]" [max]="BREW_TIME_RANGE[1]"
+                    [step]="BREW_TIME_RANGE[2]">
+                    <ion-label range-left>{{BREW_TIME_RANGE[0]}}</ion-label>
+                    <ion-label range-right>{{BREW_TIME_RANGE[1]}}</ion-label>
+                </ion-range>
+            </ion-item>
+        </ion-list>
+        <button ion-button [disabled]="!addRecipeForm.valid" type="submit" block>{{'MAIN.SAVE' | translate}}</button>
+    </form>
+</ion-content>
+<ion-footer>
+
+</ion-footer>
