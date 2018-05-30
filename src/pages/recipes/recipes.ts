@@ -33,7 +33,7 @@
  */
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, ToastController, ItemSliding } from 'ionic-angular';
 import { Recipe, RecipeServiceProvider } from './../../providers/recipe-service/recipe-service';
 import * as moment from 'moment';
 
@@ -49,9 +49,31 @@ export class RecipesPage {
     private messages = {
         'MAIN.ERROR': '',
         'MAIN.OK': '',
-        'RECIPES.REORDER_HINT': ''
+        'MAIN.CANCEL': '',
+        'RECIPES.REORDER_HINT': '',
+        'RECIPES.DELETE_CANCELLED': '',
+        'RECIPES.DELETED': '',
+        'RECIPES.UPLOADED': '',
+        'RECIPES.NO_FREE_UPLOAD_SLOT_TITLE': '',
+        'RECIPES.NO_FREE_UPLOAD_SLOT_MESG': '',
+        'RECIPES.REMOVE_CANCELLED': '',
+        'RECIPES.REMOVED': '',
+        'MAIN.CONFIRM': ''
     };
 
+    // Color slot assignments for recipes stored on the machine
+    private recipeSlots: RecipeSlots;
+
+    /**
+     * Creates an instance of RecipesPage.
+     * @param {NavController} navCtrl 
+     * @param {NavParams} nacParams 
+     * @param {AlertController} alertCtrl 
+     * @param {ToastController} toastCtrl 
+     * @param {TranslateService} translateService 
+     * @param {RecipeServiceProvider} recipeService 
+     * @memberof RecipesPage
+     */
     constructor(public navCtrl: NavController,
         public nacParams: NavParams,
         private alertCtrl: AlertController,
@@ -59,12 +81,20 @@ export class RecipesPage {
         private translateService: TranslateService,
         private recipeService: RecipeServiceProvider) {
 
+        this.recipeSlots = new RecipeSlots();
+
         this.translate();
 
         //TODO: Load stored recipes from machines -- For now use from local store
         this.recipeService.loadRecipes()
             .then((recipeList) => {
                 this.recipeList = recipeList;
+                // Update the avilable slots
+                this.recipeList.forEach(recipe => {
+                    if (recipe.upload) {
+                        this.recipeSlots.setRecipe(recipe.color, recipe.id);
+                    }
+                });
             }).catch((err) => {
                 this.showAlert("Failed to load local recipes", err.message);
             });
@@ -93,14 +123,51 @@ export class RecipesPage {
      * @param {string} subtitle
      * @memberof RecipesPage
      */
-    private showAlert(title: string, subtitle: string) {
+    private showAlert(title: string, mesg: string) {
         let alert = this.alertCtrl.create({
             title: title,
-            subTitle: subtitle,
+            message: mesg,
             buttons: [this.messages['MAIN.OK']]
         });
         alert.present();
     }
+
+
+    /**
+     * Show a confirmation pop-up dialog
+     * 
+     * @private
+     * @param {string} title 
+     * @param {string} message 
+     * @returns {Promise<any>} 
+     * @memberof RecipesPage
+     */
+    private showConfirmAlert(title: string, message: string): Promise<any> {
+        return new Promise((resolve, reject) => {
+            let alert = this.alertCtrl.create({
+                title: title,
+                message: message,
+                buttons: [
+                    {
+                        text: this.messages['MAIN.CANCEL'],
+                        role: 'cancel',
+                        handler: () => {
+                            reject('cancel');
+                        }
+                    },
+                    {
+                        text: this.messages['MAIN.OK'],
+                        handler: () => {
+                            resolve('ok');
+                        }
+                    }
+                ]
+            });
+            alert.present();
+        });
+
+    }
+
 
     /**
      * Show message as a toast
@@ -113,8 +180,8 @@ export class RecipesPage {
         let toast = this.toastCtrl.create({
             message: message,
             cssClass: 'events-toast',
-            position: 'middle',
-            duration: 5000
+            position: 'bottom',
+            duration: 2000
         });
         toast.present();
     }
@@ -137,9 +204,9 @@ export class RecipesPage {
      * @type {Array<Recipe>}
      * @memberof RecipesPage
      */
-    public get storedRecipes():Array<Recipe>{
+    public get storedRecipes(): Array<Recipe> {
         if (this.recipeList) {
-            return this.recipeList.filter(recipe => recipe.stored);
+            return this.recipeList.filter(recipe => recipe.upload);
         }
 
     }
@@ -152,9 +219,9 @@ export class RecipesPage {
      * @type {Array<Recipe>}
      * @memberof RecipesPage
      */
-    public get localRecipes():Array<Recipe>{
+    public get localRecipes(): Array<Recipe> {
         if (this.recipeList) {
-            return this.recipeList.filter(recipe => !recipe.stored);
+            return this.recipeList.filter(recipe => !recipe.upload);
         }
 
     }
@@ -165,10 +232,88 @@ export class RecipesPage {
      *
      * @memberof RecipesPage
      */
-    public addRecipe(){
-        this.navCtrl.push('RecipeFormPage', {id: null});
+    public addRecipe() {
+        this.navCtrl.push('RecipeFormPage', { id: null });
     }
 
+
+    /**
+     * Delete a recipe from the local storage
+     * 
+     * @param {Recipe} recipe 
+     * @param {ItemSliding} item 
+     * @memberof RecipesPage
+     */
+    public deleteRecipe(recipe: Recipe, item: ItemSliding) {
+        this.translateService.get('RECIPES.CONFIRM_DELETE', { recipeName: recipe.name }).subscribe(res => {
+            let message = res;
+            this.showConfirmAlert(this.messages["MAIN.CONFIRM"], message)
+                .then((result) => {
+                    this.recipeService.deleteRecipe(recipe.id);
+                    this.showToast(this.messages["RECIPES.DELETED"]);
+                }).catch((err) => {
+                    this.showToast(this.messages["RECIPES.DELETE_CANCELLED"]);
+                });
+            item.close();
+        });
+    }
+
+
+    /**
+     * Edit a recipe
+     * 
+     * @param {Recipe} recipe 
+     * @param {ItemSliding} item 
+     * @memberof RecipesPage
+     */
+    public editRecipe(recipe: Recipe, item: ItemSliding) {
+        this.navCtrl.push('RecipeFormPage', { id: recipe.id })
+        item.close();
+    }
+
+
+    /**
+     * Remove a recipe from the machine
+     * 
+     * @param {Recipe} recipe 
+     * @param {ItemSliding} item 
+     * @memberof RecipesPage
+     */
+    public removeRecipe(recipe: Recipe, item: ItemSliding) {
+        this.translateService.get('RECIPES.CONFIRM_REMOVE', { recipeName: recipe.name }).subscribe(res => {
+            let message = res;
+            this.showConfirmAlert(this.messages["MAIN.CONFIRM"], message)
+                .then((result) => {
+                    this.recipeSlots.releaseSlot(recipe.id);
+                    recipe.color = undefined;
+                    recipe.upload = false;
+                    this.recipeService.storeRecipe(recipe);
+                    this.showToast(this.messages["RECIPES.REMOVED"]);
+                }).catch((err) => {
+                    this.showToast(this.messages["RECIPES.REMOVE_CANCELLED"]);
+                });
+            item.close();
+        });
+    }
+
+    /**
+     * Upload a recipe to the machine to an available slot
+     * 
+     * @param {Recipe} recipe 
+     * @param {ItemSliding} item 
+     * @memberof RecipesPage
+     */
+    public uploadRecipe(recipe: Recipe, item: ItemSliding) {
+        if (this.recipeSlots.availableSlots === 0) {
+            this.showAlert(this.messages["RECIPES.NO_FREE_UPLOAD_SLOT_TITLE"], this.messages["RECIPES.NO_FREE_UPLOAD_SLOT_MESG"]);
+        } else {
+            recipe.color = this.recipeSlots.useSlot(recipe.id);
+            recipe.upload = true;
+            this.recipeService.storeRecipe(recipe);
+            this.showToast(this.messages["RECIPES.UPLOADED"]);
+        }
+        item.close();
+    }
 
     /**
      * Get elapsed time from now as localized text string
@@ -180,4 +325,81 @@ export class RecipesPage {
     public getUpdatedTimeFromNow(dateTime: string): string {
         return (moment(dateTime).fromNow());
     }
+}
+
+/**
+ * Manages recipe slots for storing on the machine
+ * 
+ * @class RecipeSlots
+ */
+class RecipeSlots {
+    // Available slots on the machines 
+    private recipeSlots = {
+        'recipe-slot-1': undefined,
+        'recipe-slot-2': undefined,
+        'recipe-slot-3': undefined,
+        'recipe-slot-4': undefined
+    };
+    constructor() {
+    }
+
+    public get availableSlots() {
+        let n = 0;
+        for (let key in this.recipeSlots) {
+            if (!this.recipeSlots[key]) {
+                n++;
+            }
+        }
+        return n;
+    }
+
+
+    /**
+     * Assign a slot to a recipe
+     * 
+     * @param {string} id 
+     * @returns {string}        Returns the color of the slot used
+     * @memberof RecipeSlots
+     */
+    public useSlot(id: string): string {
+        let slot;
+        for (let key in this.recipeSlots) {
+            if (!this.recipeSlots[key]) {
+                slot = key;
+                this.recipeSlots[key] = id;
+                break;
+            }
+        }
+        return slot;
+    }
+
+
+    /**
+     * Release the slot
+     * 
+     * @param {string} id 
+     * @memberof RecipeSlots
+     */
+    public releaseSlot(id: string): void {
+        for (let key in this.recipeSlots) {
+            if (this.recipeSlots[key] === id) {
+                this.recipeSlots[key] = undefined;
+                break;
+            }
+        }
+    }
+
+
+    /**
+     * Set the recipe ID for a given slot identified by the color
+     * 
+     * @param {string} color 
+     * @param {string} id 
+     * @memberof RecipeSlots
+     */
+    public setRecipe(color: string, id: string) {
+        this.recipeSlots[color] = id;
+    }
+
+
 }

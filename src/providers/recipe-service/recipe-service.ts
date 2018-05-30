@@ -43,7 +43,7 @@ import * as uuid from 'uuid';
 export class Recipe {
     public id: string;
     public name: string;
-    public stored: boolean;
+    public upload: boolean;
     public color: string;
     public cupSize: number;
     public temperature: number;
@@ -105,6 +105,13 @@ export class RecipeServiceProvider {
         return this.recipeList;
     }
 
+
+    /**
+     * Add/update a recipe 
+     * 
+     * @param {Recipe} newRecipe 
+     * @memberof RecipeServiceProvider
+     */
     storeRecipe(newRecipe: Recipe): void {
         let recipe = this.recipeList.find(r => r.id === newRecipe.id);
 
@@ -118,9 +125,33 @@ export class RecipeServiceProvider {
             this.recipeList.push(newRecipe);
         }
         this.storageService.putData(StorageServiceProvider.RECIPE_LIST, this.recipeList);
+        //TODO: Upload recipe to machine if upload is true
     }
 
+
+    /**
+     * Get a recipe from the local store for the given id
+     * 
+     * @param {string} id 
+     * @returns {Recipe} 
+     * @memberof RecipeServiceProvider
+     */
     getRecipe(id: string): Recipe {
         return this.recipeList.find(r => r.id === id);
+    }
+
+
+    /**
+     * Delete the recipe with the given ID
+     * 
+     * @param {string} id 
+     * @memberof RecipeServiceProvider
+     */
+    deleteRecipe(id: string): void {
+        let i = this.recipeList.findIndex(r => r.id === id);
+        if (i >= 0) {
+            this.recipeList.splice(i, 1);
+            this.storageService.putData(StorageServiceProvider.RECIPE_LIST, this.recipeList);
+        }
     }
 }

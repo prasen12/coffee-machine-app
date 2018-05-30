@@ -57,7 +57,7 @@ export class RecipeFormPage {
     private messages = {
         'MAIN.ERROR': '',
         'MAIN.OK': '',
-        'RECIPES.NEW_RECIPE_SAVED': ''
+        'RECIPES.RECIPE_SAVED': ''
     };
 
     constructor(public navCtrl: NavController,
@@ -119,8 +119,8 @@ export class RecipeFormPage {
         let toast = this.toastCtrl.create({
             message: message,
             cssClass: 'events-toast',
-            position: 'middle',
-            duration: 5000
+            position: 'bottom',
+            duration: 3000
         });
         toast.present();
     }
@@ -137,7 +137,7 @@ export class RecipeFormPage {
             this.recipe[key] = this.addRecipeForm.controls[key].value;
         }
         this.recipeService.storeRecipe(this.recipe);
-        this.showToast(this.messages['RECIPES.NEW_RECIPE_SAVED']);
+        this.showToast(this.messages['RECIPES.RECIPE_SAVED']);
         this.navCtrl.pop();
     }
 

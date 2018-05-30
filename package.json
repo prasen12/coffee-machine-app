@@ -30,6 +30,7 @@
         "@types/moment": "^2.13.0",
         "@types/uuid": "^3.4.3",
         "cordova-android": "6.4.0",
+        "cordova-ios": "^4.4.0",
         "cordova-plugin-device": "^2.0.2",
         "cordova-plugin-ionic-keyboard": "^2.0.5",
         "cordova-plugin-ionic-webview": "^1.2.1",
@@ -61,7 +62,8 @@
             "cordova-plugin-ionic-keyboard": {}
         },
         "platforms": [
-            "android"
+            "android",
+            "ios"
         ]
     },
     "config": {
