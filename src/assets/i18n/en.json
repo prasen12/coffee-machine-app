@@ -19,6 +19,7 @@
     },
     "RECIPES": {
         "STORED_ON_MACHINE": "Stored on your coffee machine",
+        "FAILED_TO_LOAD_LOCAL": "Failed to load recipes from local store",
         "STORED_LOCALLY": "Stored locally on your mobile device",
         "NO_STORED_RECIPES": "No recipes stored on the machine",
         "NO_LOCAL_RECIPES": "No recipes stored on the mobile device",
@@ -36,7 +37,7 @@
         "NO_FREE_UPLOAD_SLOT_MESG": "Remove one of the recipes from the machine to upload a new one",
         "LABELS": {
             "NAME": "Name",
-            "CUP_SIZE": "Cup Size",
+            "CUP_SIZE": "Cup Size (ml)",
             "WEIGHT": "Coffee Quantity (gms)",
             "TEMPERATURE": "Water Temperature (F)",
             "TDS": "Total Dissolved Solids (ppm)",

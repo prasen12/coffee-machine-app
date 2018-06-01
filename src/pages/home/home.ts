@@ -35,66 +35,191 @@
 
 
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ToastController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { ParticleIoServiceProvider } from './../../providers/particle-io-service/particle-io-service';
 import { StorageServiceProvider } from './../../providers/storage-service/storage-service';
+import { RecipeServiceProvider, Recipe } from '../../providers/recipe-service/recipe-service';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
-  private messages: any;
+  private brewing = false;
+  public selectedRecipe: Recipe;
+  public recipeList: Array<Recipe>;
   public device: any;
   public statusMessage: string;
+  private messages = {
+    'MAIN.ERROR': '',
+    'MAIN.OK': '',
+    'RECIPES.FAILED_TO_LOAD_LOCAL': '',
+    'RECIPES.STORED_LOCALLY': '',
+    'RECIPES.STORED_ON_MACHINE': ''
+  };
 
   constructor(public navCtrl: NavController,
     private translateService: TranslateService,
     private alertCtrl: AlertController,
     private storage: StorageServiceProvider,
+    private toastCtrl: ToastController,
+    private recipeService: RecipeServiceProvider,
     private particleIOService: ParticleIoServiceProvider) {
 
-    this.messages = {
-      'HOME.ERROR': '',
-      'MAIN.OK': ''
-    };
-    this.device = {};
 
-    for (let messageId in this.messages) {
-      this.translateService.get(messageId).subscribe(res => {
-        this.messages[messageId] = res;
-      });
-    }
+    this.translate();
+
+    // Make sure the machine is connected and online
     this.storage.getData(StorageServiceProvider.SELECTED_DEVICE)
       .then(selectedDevice => {
         if (selectedDevice) {
           this.particleIOService.getDevice(selectedDevice.id)
             .then(device => {
-              console.log(device);
+              //console.log(device);
               this.device = device;
+
+              // Load all the recipes
+              this.recipeService.loadRecipes()
+                .then((result) => {
+                  this.recipeList = result;
+                  //TODO: Get the currently selected recipe from the machine. For now use the first uploaded 
+                  //      or if none are uploaded the first in the list
+                  let uploaded = this.recipeList.filter(recipe => recipe.upload);
+                  if (uploaded.length > 0) {
+                    this.selectedRecipe = uploaded[0];
+                  } else {
+                    this.selectedRecipe = this.recipeList[0];
+                  }
+                }).catch((err) => {
+                  this.showAlert(this.messages["MAIN.ERROR"], this.messages["RECIPES.FAILED_TO_LOAD_LOCAL"]);
+                });
             })
             .catch(error => {
-              let alert = this.alertCtrl.create({
-                title: this.messages['HOME.ERROR'],
-                subTitle: error.message,
-                buttons: [this.messages['MAIN.OK']]
-              });
-              alert.present();
+              this.showAlert(this.messages['MAIN.ERROR'], error.message);
             });
         } else {
-          this.statusMessage = this.messages['HOME.NO_DEVICE_SELECTED'];
+          this.statusMessage = this.messages['MAIN.NO_DEVICE_SELECTED'];
         }
 
       })
   }
 
+
+  /**
+   * Translate messages
+   * 
+   * @private
+   * @memberof HomePage
+   */
+  private translate() {
+    for (let messageId in this.messages) {
+      this.translateService.get(messageId).subscribe(res => {
+        this.messages[messageId] = res;
+      });
+    }
+  }
+
+
+  /**
+   * Show an alert
+   * 
+   * @private
+   * @param {string} title 
+   * @param {string} mesg 
+   * @memberof HomePage
+   */
+  private showAlert(title: string, mesg: string) {
+    let alert = this.alertCtrl.create({
+      title: title,
+      message: mesg,
+      buttons: [this.messages['MAIN.OK']]
+    });
+    alert.present();
+  }
+
+
+  /**
+   * Show a toast message
+   * 
+   * @private
+   * @param {string} message 
+   * @memberof HomePage
+   */
+  // private showToast(message: string) {
+  //   let toast = this.toastCtrl.create({
+  //     message: message,
+  //     cssClass: 'events-toast',
+  //     position: 'bottom',
+  //     duration: 3000
+  //   });
+  //   toast.present();
+  // }
+
+
+  public startBrewCycle() {
+    this.brewing = !this.brewing;
+  }
+
+  /**
+   *  Return connection status
+   * 
+   * @readonly
+   * @type {boolean}
+   * @memberof HomePage
+   */
   get connected(): boolean {
     return this.device ? this.device.connected : false;
   }
-  get title() {
-    return "My home";
+
+
+  /**
+   * Return the color for the  card title
+   * 
+   * @readonly
+   * @type {string}
+   * @memberof HomePage
+   */
+  get cardColor(): string {
+    return this.selectedRecipe.upload ? this.selectedRecipe.color : 'recipe-local';
+  }
+
+
+  /**
+   * Return an icon identifying if the recipe is on the machine or is local
+   * 
+   * @readonly
+   * @type {string}
+   * @memberof HomePage
+   */
+  get cardIcon(): string {
+    return this.selectedRecipe.upload ? 'cloud-outline' : 'folder-open';
+  }
+
+
+
+  /**
+   * Returns the text for recipe's storage
+   * 
+   * @readonly
+   * @type {string}
+   * @memberof HomePage
+   */
+  get storedLocation(): string {
+    return this.selectedRecipe.upload ? this.messages["RECIPES.STORED_ON_MACHINE"] : this.messages["RECIPES.STORED_LOCALLY"];
+  }
+
+
+  /**
+   * Returns whether the brew cycle is on
+   * 
+   * @readonly
+   * @type {boolean}
+   * @memberof HomePage
+   */
+  get isBrewing(): boolean {
+    return this.brewing;
   }
 
 }

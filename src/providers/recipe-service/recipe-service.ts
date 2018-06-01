@@ -83,6 +83,7 @@ export class RecipeServiceProvider {
      */
     public loadRecipes():Promise<any> {
         return new Promise((resolve, reject) => {
+            //TODO: Load only if not loaded
              this.storageService.getData(StorageServiceProvider.RECIPE_LIST)
             .then(recipeList => {
                 this.recipeList = recipeList ? recipeList : new Array<Recipe>();
