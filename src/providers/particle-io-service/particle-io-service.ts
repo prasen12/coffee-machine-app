@@ -132,7 +132,7 @@ export class ParticleIoServiceProvider {
      * @param {string} deviceId
      * @memberof ParticleIoServiceProvider
      */
-    startEventLog(deviceId: string):Promise<any> {
+    startEventLog(deviceId: string): Promise<any> {
         return new Promise((resolve, reject) => {
             if (!this.eventStream) {
                 this.getEvents(deviceId)
@@ -161,7 +161,7 @@ export class ParticleIoServiceProvider {
      * @returns {Array<any>}
      * @memberof ParticleIoServiceProvider
      */
-    getEventLog():Array<any>{
+    getEventLog(): Array<any> {
         return this.eventLog;
     }
 
@@ -171,7 +171,7 @@ export class ParticleIoServiceProvider {
      * @returns {boolean}
      * @memberof ParticleIoServiceProvider
      */
-    isEventStreamActive():boolean {
+    isEventStreamActive(): boolean {
         return (this.eventStream !== undefined && this.eventStream !== null);
     }
 
@@ -237,29 +237,6 @@ export class ParticleIoServiceProvider {
         });
     }
 
-
-    /**
-     * Call the load cell fuction
-     *
-     * @param {string} deviceId
-     * @param {string} operation  Operation values can be null, "raw" and "tare"
-     * @returns {Promise<any>}
-     * @memberof ParticleIoServiceProvider
-     */
-    callLoadCell(deviceId: string, operation: string): Promise<any> {
-        let arg = operation ? operation : '';
-        return new Promise((resolve, reject) => {
-            this.particleApi.callFunction({
-                auth: this.accessToken,
-                deviceId: deviceId,
-                name: 'loadCell',
-                argument: arg
-            })
-                .then(data => resolve(data.body.return_value))
-                .catch(error => reject(error));
-        });
-    }
-
     /**
      * Get the current load cell reading
      *
@@ -268,7 +245,16 @@ export class ParticleIoServiceProvider {
      * @memberof ParticleIoServiceProvider
      */
     getLoadCellReading(deviceId: string): Promise<any> {
-        return this.callLoadCell(deviceId, null);
+        return new Promise((resolve, reject) => {
+            this.particleApi.callFunction({
+                auth: this.accessToken,
+                deviceId: deviceId,
+                name: 'loadCell',
+                argument: ''
+            })
+                .then(data => resolve(data.body.return_value))
+                .catch(error => reject(error));
+        });
     }
 
     /**
@@ -279,7 +265,16 @@ export class ParticleIoServiceProvider {
      * @memberof ParticleIoServiceProvider
      */
     setTareWeight(deviceId: string): Promise<any> {
-        return this.callLoadCell(deviceId, 'tare');
+        return new Promise((resolve, reject) => {
+            this.particleApi.callFunction({
+                auth: this.accessToken,
+                deviceId: deviceId,
+                name: 'setTare',
+                argument: ''
+            })
+                .then(data => resolve(data.body.return_value))
+                .catch(error => reject(error));
+        });
     }
 
     /**
@@ -352,12 +347,12 @@ export class ParticleIoServiceProvider {
      * @param {boolean} start
      */
     operateMotor(deviceId: string, motorNumber: number, start: boolean): Promise<any> {
-        let arg = `${motorNumber},${start ? "on": "off"}`
+        let arg = `${motorNumber},${start ? "on" : "off"}`
         return new Promise((resolve, reject) => {
             this.particleApi.callFunction({
                 auth: this.accessToken,
                 deviceId: deviceId,
-                name: 'motor',
+                name: 'shaker',
                 argument: arg
             }).then((result) => {
                 resolve(result.body.return_value)
