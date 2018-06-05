@@ -43,10 +43,13 @@ SOFTWARE.
 </ion-header>
 
 <ion-content padding>
-    <ion-tabs>
+    <ion-tabs *ngIf="isSignedIn()">
         <ion-tab tabIcon="analytics" [tabTitle]="'DIAGNOSTICS.METRICS.TITLE' | translate" [root]="metricsTab"></ion-tab>
         <ion-tab tabIcon="flash" [tabTitle]="'DIAGNOSTICS.EVENTS.TITLE'|translate" [root]="eventsTab"></ion-tab>
         <ion-tab tabIcon="cog" style="font-family: icomoon;"  [tabTitle]="'DIAGNOSTICS.OPERATIONS.TITLE' | translate" [root]="manualOperationsTab"></ion-tab>
-
     </ion-tabs>
+
+    <ion-item color="danger" *ngIf="!isSignedIn()">
+        <h2>{{ 'MAIN.NOT_SIGNED_IN' | translate }}</h2>
+    </ion-item>
 </ion-content>

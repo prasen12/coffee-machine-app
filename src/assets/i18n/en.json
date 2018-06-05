@@ -8,7 +8,18 @@
         "CONFIRM": "Please Confirm",
         "LOADING": "Loading ...",
         "SAVE": "Save",
-        "NO_DEVICE_SELECTED": "No device has been selected. Use Settings option to select device"
+        "BREW": "Brew",
+        "BREW_CANCELLED": "Brew operation cancelled",
+        "NOT_SIGNED_IN": "Not Signed in to Particle.io. Please sign in using the Settings option in the menu",
+        "NO_DEVICE_SELECTED": "No device has been selected. Use Settings option to select device",
+        "BREW_STATES": {
+            "FILL": "Fill Reservoir",
+            "HEAT": "Heat water",
+            "MIX": "Mix coffee & water",
+            "BREW": "Brew",
+            "DISPENSE": "Dispense coffee",
+            "DONE": "Done brewing"
+        }
     },
     "NAVIGATION": {
         "HOME": "Home",

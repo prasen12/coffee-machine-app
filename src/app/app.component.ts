@@ -66,7 +66,7 @@ export class MyApp {
 
     this.pages = [
       { title: 'NAVIGATION.HOME',       icon: 'cafe', component: HomePage , color: 'menu-home' },
-      { title: 'NAVIGATION.RECIPES',    icon: 'flask', component: RecipesPage, color: 'menu-recipes' },
+      { title: 'NAVIGATION.RECIPES',    icon: 'paper', component: RecipesPage, color: 'menu-recipes' },
       { title: 'NAVIGATION.MAINTENANCE', icon:'build', component: MaintenancePage,  color: 'menu-maintenance'},
       { title: 'NAVIGATION.DIAGNOSTICS', icon: 'pr-stethoscope', component: DiagnosticsPage, color: 'menu-diagnostics'},
       { title: 'NAVIGATION.SETTINGS', icon: 'settings', component: SettingsPage, color: 'menu-settings' }

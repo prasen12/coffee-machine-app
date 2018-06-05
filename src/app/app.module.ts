@@ -60,6 +60,7 @@ import { ManualOperationsTabPage } from '../pages/manual-operations-tab/manual-o
 import { EventsTabPage } from '../pages/events-tab/events-tab';
 
 import { RecipeFormPageModule } from './../pages/recipe-form/recipe-form.module';
+import { BrewServiceProvider } from '../providers/brew-service/brew-service';
 
 @NgModule({
   declarations: [
@@ -113,7 +114,8 @@ import { RecipeFormPageModule } from './../pages/recipe-form/recipe-form.module'
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ParticleIoServiceProvider,
     RecipeServiceProvider,
-    StorageServiceProvider
+    StorageServiceProvider,
+    BrewServiceProvider
   ]
 })
 export class AppModule {}

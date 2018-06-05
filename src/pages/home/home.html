@@ -24,10 +24,10 @@ SOFTWARE.
 
 
  File Created: Friday, 11th May 2018 6:35:29 pm
- Author: Prasen Palvankar 
+ Author: Prasen Palvankar
 
  Last Modified: Wednesday, 16th May 2018 10:31:33 pm
- Modified By: Prasen Palvankar 
+ Modified By: Prasen Palvankar
 
 
 -->
@@ -40,11 +40,16 @@ SOFTWARE.
     </ion-navbar>
 </ion-header>
 
+
 <ion-content padding>
 
+    <div *ngIf="!isSignedIn()">
+        <ion-item color="danger">
+            {{ 'MAIN.NOT_SIGNED_IN' | translate}}
+        </ion-item>
+    </div>
 
-    <ion-content *ngIf="connected">
-
+    <div *ngIf="isSignedIn()">
         <ion-card *ngIf="selectedRecipe">
             <ion-card-title>
                 <ion-item [color]="cardColor">
@@ -55,78 +60,73 @@ SOFTWARE.
             </ion-card-title>
 
             <ion-card-content>
-                <ion-list>
+                <div *ngIf="!brewing">
+                    <ion-list>
 
-                    <ion-item>
-                        <ion-icon color="coffee" name="cafe" item-start>
-                        </ion-icon>
-                        <ion-label> {{ 'RECIPES.LABELS.CUP_SIZE' | translate}}</ion-label>
-                        <ion-badge item-end>{{ selectedRecipe.cupSize}}</ion-badge>
-                    </ion-item>
-
-                    <ion-item>
-                        <ion-icon color="coffee-quantity" name="basket" item-start>
-                        </ion-icon>
-                        <ion-label> {{ 'RECIPES.LABELS.WEIGHT' | translate}}</ion-label>
-                        <ion-badge item-end>{{ selectedRecipe.coffeeQuantity }}</ion-badge>
-                    </ion-item>
-
-                    <ion-item>
-                        <ion-icon color="danger" name="thermometer" item-start></ion-icon>
-                        <ion-label> {{ 'RECIPES.LABELS.TEMPERATURE' | translate }}</ion-label>
-                        <ion-badge item-end>{{selectedRecipe.temperature}}</ion-badge>
-                    </ion-item>
-
-                    <ion-item>
-                        <ion-icon color="coffee-tds" name="beaker" item-start></ion-icon>
-                        <ion-label> {{ 'RECIPES.LABELS.TDS' | translate }} </ion-label>
-                        <ion-badge item-end>{{selectedRecipe.tds}}</ion-badge>
-                    </ion-item>
-
-
-                    <ion-item>
-                        <ion-icon color="coffee-timer" name="timer" item-start></ion-icon>
-                        <ion-label> {{ 'RECIPES.LABELS.DURATION' | translate}} </ion-label>
-                        <ion-badge item-end>{{selectedRecipe.brewDuration}}</ion-badge>
-                    </ion-item>
-                </ion-list>
-
-            </ion-card-content>
-            
-                <ion-item>
-                    <p>{{storedLocation}}</p>
-                </ion-item>
-
-                <ion-item>
-                    <ion-label> Change Recipe</ion-label>
-                    <ion-select [disabled]="isBrewing" [(ngModel)]="selectedRecipe" interface="action-sheet">
-                        <ion-option *ngFor="let recipe of recipeList" [value]="recipe">{{recipe.name}}</ion-option>
-                    </ion-select>
-                </ion-item>            
-        </ion-card>
-        <ion-card *ngIf="isBrewing">
-                <div >
-                        <ion-item-divider color="light">
-                                Brewing your coffee using this recipe ...
-                        </ion-item-divider>
                         <ion-item>
-                            <h2>Heating the water ...</h2>
+                            <ion-icon color="coffee" name="cafe" item-start>
+                            </ion-icon>
+                            <ion-label> {{ 'RECIPES.LABELS.CUP_SIZE' | translate}}</ion-label>
+                            <ion-badge item-end>{{ selectedRecipe.cupSize}}</ion-badge>
                         </ion-item>
-                    </div>
+
+                        <ion-item>
+                            <ion-icon color="coffee-quantity" name="basket" item-start>
+                            </ion-icon>
+                            <ion-label> {{ 'RECIPES.LABELS.WEIGHT' | translate}}</ion-label>
+                            <ion-badge item-end>{{ selectedRecipe.coffeeQuantity }}</ion-badge>
+                        </ion-item>
+
+                        <ion-item>
+                            <ion-icon color="danger" name="thermometer" item-start></ion-icon>
+                            <ion-label> {{ 'RECIPES.LABELS.TEMPERATURE' | translate }}</ion-label>
+                            <ion-badge item-end>{{selectedRecipe.temperature}}</ion-badge>
+                        </ion-item>
+
+                        <ion-item>
+                            <ion-icon color="coffee-tds" name="beaker" item-start></ion-icon>
+                            <ion-label> {{ 'RECIPES.LABELS.TDS' | translate }} </ion-label>
+                            <ion-badge item-end>{{selectedRecipe.tds}}</ion-badge>
+                        </ion-item>
+
+
+                        <ion-item>
+                            <ion-icon color="coffee-timer" name="timer" item-start></ion-icon>
+                            <ion-label> {{ 'RECIPES.LABELS.DURATION' | translate}} </ion-label>
+                            <ion-badge item-end>{{selectedRecipe.brewDuration}}</ion-badge>
+                        </ion-item>
+                    </ion-list>
+                    <ion-item>
+                            <p>{{storedLocation}}</p>
+                        </ion-item>
+
+                        <ion-item>
+                            <ion-label> Change Recipe</ion-label>
+                            <ion-select [disabled]="brewing" [(ngModel)]="selectedRecipe" interface="action-sheet">
+                                <ion-option *ngFor="let recipe of recipeList" [value]="recipe">{{recipe.name}}</ion-option>
+                            </ion-select>
+                        </ion-item>
+                </div>
+
+                <div *ngIf="brewing">
+                    <ion-item-divider color="light">
+                        Brewing your coffee using this recipe ...
+                    </ion-item-divider>
+                    <ion-item *ngFor="let brewState of displayBrewStates">
+                       {{brewState.label | translate}}
+                       <ion-icon [name]="brewStateIcons[brewState.state]" [color]="brewStateIconColors[brewState.state]" item-end></ion-icon>
+                    </ion-item>
+                </div>
+            </ion-card-content>
+
+
         </ion-card>
 
-    </ion-content>
-
-    <!-- <ion-content *ngIf="!connected" style="text-align: center;">
-        <ion-item style="text-align: center">
-            <ion-icon name="pr-offline" style="font-size: 8em; color: red; text-align: center;"></ion-icon>
-        </ion-item>
-        <ion-item style="font-size:2em; color: red;">Device is Offline</ion-item>
-        <ion-item>Last Heard: {{device.last_heard}}</ion-item>
-    </ion-content> -->
+    </div>
 
 
 </ion-content>
-<ion-footer>
-    <button ion-button block color="primary" (click)="startBrewCycle()">Brew</button>
+
+<ion-footer *ngIf="isSignedIn()">
+    <button ion-button [disabled]="!recipeList  || recipeList.length === 0" block color="primary" (click)="brewCycle()">{{buttonLabel | translate}}</button>
 </ion-footer>

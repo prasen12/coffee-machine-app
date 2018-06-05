@@ -1,9 +1,11 @@
 page-home {
-    ion-card-title .icon {
-        font-size: 1.5em;
+    ion-card-title .label {
+        font-size: 1.3em;
     }
-    ion-card-title h2 {
-        font-size: 1.5em;
+
+    ion-list ion-label {
+        font-size: 0.8em;
     }
-    
+
+
 }

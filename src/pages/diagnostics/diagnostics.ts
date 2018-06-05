@@ -1,3 +1,4 @@
+import { ParticleIoServiceProvider } from './../../providers/particle-io-service/particle-io-service';
 /*
  *  MIT License
  *
@@ -48,10 +49,15 @@ export class DiagnosticsPage {
     public eventsTab: any;
 
     constructor(public navCtrl: NavController,
+            private particleIOService: ParticleIoServiceProvider,
             public nacParams: NavParams) {
         this.manualOperationsTab = ManualOperationsTabPage;
         this.metricsTab = MetricsTabPage;
         this.eventsTab = EventsTabPage;
+    }
+
+    isSignedIn():boolean {
+        return this.particleIOService.isSignedIn();
     }
 }
 
