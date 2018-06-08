@@ -1,3 +1,4 @@
+import { Recipe } from './../recipe-service/recipe-service';
 /*
  *  MIT License
  *
@@ -83,6 +84,17 @@ export class ParticleIoServiceProvider {
         });
     }
 
+
+    /**
+     *Returns the state of the session
+     *
+     * @returns {boolean}
+     * @memberof ParticleIoServiceProvider
+     */
+    isSignedIn(): boolean {
+        return this.accessToken ? true : false;
+    }
+
     /**
      * Get list of devices
      *
@@ -133,6 +145,7 @@ export class ParticleIoServiceProvider {
      * @memberof ParticleIoServiceProvider
      */
     startEventLog(deviceId: string): Promise<any> {
+        //TODO: Use Event class
         return new Promise((resolve, reject) => {
             if (!this.eventStream) {
                 this.getEvents(deviceId)
@@ -362,4 +375,79 @@ export class ParticleIoServiceProvider {
         });
     }
 
+    /**
+     *Initiate the brew cycle
+     *
+     * @param {string} deviceId
+     * @param {Recipe} recipe
+     * @returns {Promise<any>}
+     * @memberof ParticleIoServiceProvider
+     */
+    startBrewCycle(deviceId: string, recipe: Recipe): Promise<any> {
+        //TODO: Change to match the final brew params.
+        let arg = `simple,size=${recipe.cupSize}`;
+        return new Promise((resolve, reject) => {
+            // First subcscribe to brew events
+            return this.particleApi.getEventStream({
+                auth: this.accessToken,
+                deviceId: deviceId
+            })
+                .then((eventStream) => {
+                    this.particleApi.callFunction({
+                        auth: this.accessToken,
+                        deviceId: deviceId,
+                        name: 'brew',
+                        argument: arg
+                    })
+                        .then((result) => {
+                            resolve(eventStream);
+                        })
+                        .catch((err) => {
+                            reject(err);
+                        });
+                })
+                .catch(error => reject(error));
+        });
+    }
+
+
+    /**
+     * Powerdown all controls
+     *
+     * @param {string} deviceId
+     * @memberof ParticleIoServiceProvider
+     */
+    powerDown(deviceId: string): void {
+        this.particleApi.callFunction({
+            auth: this.accessToken,
+            deviceId: deviceId,
+            name: 'powerDown',
+            argument: ''
+        })
+        .then((result) => {
+            console.log(`Powerdown result = ${result}`);
+        }).catch((err) => {
+            console.error(`POwerdown error = ${err.message}`, err);
+        });
+    }
+
+}
+
+/**
+ * Represent the structure of the events in the event stream
+ *
+ * @class DeviceEvent
+ */
+export class DeviceEvent {
+    name: string;
+    data: string;
+    ttl: string
+    published_at: string;
+    coreid: string;
+
+    constructor(event: any) {
+        for (let attr in event) {
+            this[attr] = event[attr];
+        }
+    }
 }

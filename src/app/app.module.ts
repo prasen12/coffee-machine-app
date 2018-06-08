@@ -35,7 +35,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
-import { MyApp } from './app.component';
+import {MyApp} from './app.component';
 import { HomePage } from '../pages/home/home';
 //import { ListPage } from '../pages/list/list';
 import { DiagnosticsPage } from '../pages/diagnostics/diagnostics';
@@ -60,6 +60,7 @@ import { ManualOperationsTabPage } from '../pages/manual-operations-tab/manual-o
 import { EventsTabPage } from '../pages/events-tab/events-tab';
 
 import { RecipeFormPageModule } from './../pages/recipe-form/recipe-form.module';
+import { BrewServiceProvider } from '../providers/brew-service/brew-service';
 import { MiscSettingsTabModule } from '../pages/misc-settings/misc-settings.module';
 
 @NgModule({
@@ -115,7 +116,8 @@ import { MiscSettingsTabModule } from '../pages/misc-settings/misc-settings.modu
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ParticleIoServiceProvider,
     RecipeServiceProvider,
-    StorageServiceProvider
+    StorageServiceProvider,
+    BrewServiceProvider
   ]
 })
 export class AppModule {}
