@@ -34,14 +34,14 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { ParticleIOSettingsTab } from './particle';
-import { MiscSettingsTab } from './misc';
+import { MiscSettingsTab } from '../misc-settings/misc-settings';
 import { DeviceSettingsTab } from './devices';
 
 @Component({
-    selector: 'page-settings',
-    templateUrl: 'settings.html'
+    selector: 'page-configuration',
+    templateUrl: 'configuration.html'
 })
-export class SettingsPage {
+export class ConfigurationPage {
     particleSettingsTab: any;
     miscSettingsTab: any;
     deviceSettingsTab: any;

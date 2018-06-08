@@ -39,7 +39,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 //import { ListPage } from '../pages/list/list';
 import { DiagnosticsPage } from '../pages/diagnostics/diagnostics';
-import { SettingsPage } from '../pages/settings/settings';
+import { ConfigurationPage } from '../pages/configuration/configuration';
 import { MaintenancePage, ModalContentPage } from './../pages/maintenance/maintenance';
 import { RecipesPage } from './../pages/recipes/recipes';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -49,10 +49,10 @@ import { IonicStorageModule } from '@ionic/storage';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { ParticleIOSettingsTab } from '../pages/settings/particle';
-import { MiscSettingsTab } from '../pages/settings/misc';
+import { ParticleIOSettingsTab } from '../pages/configuration/particle';
+import { MiscSettingsTab } from '../pages/configuration/misc';
 import { ParticleIoServiceProvider } from '../providers/particle-io-service/particle-io-service';
-import { DeviceSettingsTab } from '../pages/settings/devices';
+import { DeviceSettingsTab } from '../pages/configuration/devices';
 import { RecipeServiceProvider } from '../providers/recipe-service/recipe-service';
 import { StorageServiceProvider } from '../providers/storage-service/storage-service';
 import { MetricsTabPage } from '../pages/metrics-tab/metrics-tab';
@@ -60,13 +60,14 @@ import { ManualOperationsTabPage } from '../pages/manual-operations-tab/manual-o
 import { EventsTabPage } from '../pages/events-tab/events-tab';
 
 import { RecipeFormPageModule } from './../pages/recipe-form/recipe-form.module';
+import { MiscSettingsTabModule } from '../pages/misc-settings/misc-settings.module';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     DiagnosticsPage,
-    SettingsPage,
+    ConfigurationPage,
     RecipesPage,
     MaintenancePage,
     ParticleIOSettingsTab,
@@ -81,6 +82,7 @@ import { RecipeFormPageModule } from './../pages/recipe-form/recipe-form.module'
     BrowserModule,
     HttpClientModule,
     RecipeFormPageModule,
+    MiscSettingsTabModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
     TranslateModule.forRoot({
@@ -96,7 +98,7 @@ import { RecipeFormPageModule } from './../pages/recipe-form/recipe-form.module'
     MyApp,
     HomePage,
     DiagnosticsPage,
-    SettingsPage,
+    ConfigurationPage,
     RecipesPage,
     MaintenancePage,
     ParticleIOSettingsTab,

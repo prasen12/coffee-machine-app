@@ -13,7 +13,7 @@
     "NAVIGATION": {
         "HOME": "Home",
         "DIAGNOSTICS": "Diagnostics",
-        "SETTINGS": "Settings",
+        "CONFIGURATION": "Configuration",
         "RECIPES": "Recipes",
         "MAINTENANCE": "Maintenance"
     },
@@ -26,6 +26,7 @@
         "REORDER_HINT": "You can now reorder the recipes stored on the machine",
         "NEW_RECIPE_TITLE": "Create New Recipe",
         "RECIPE_SAVED": "Recipe saved!",
+        "UPLOADED": "Recipe added to the machine",
         "LAST_UPDATED": "Last updated {{value}}",
         "CONFIRM_DELETE": "Are sure you want to delete {{recipeName}} recipe?",
         "DELETE_CANCELLED": "Recipe deletion cancelled",
@@ -46,6 +47,12 @@
 
 
     },
+    "CONFIGURATION": {
+        "TABS": {
+            "DEVICES": "Devices",
+            "MISC": "Settings"
+        }
+    },
     "SETTINGS": {
         "PARTICLE": {
             "USERNAME": "Username",
@@ -61,6 +68,10 @@
             "NO_DEVICES": "No devices found.",
             "ERROR": "Failed to get devices",
             "REFRESH": "Reload Devices"
+        },
+        "MISC": {
+            "TITLE": "Settings",
+            "WIFI": "WiFi Setup"
         }
 
     },

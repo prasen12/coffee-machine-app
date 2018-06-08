@@ -42,7 +42,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { HomePage } from '../pages/home/home';
 import { DiagnosticsPage } from '../pages/diagnostics/diagnostics';
 import { RecipesPage } from '../pages/recipes/recipes';
-import { SettingsPage } from '../pages/settings/settings';
+import { ConfigurationPage } from '../pages/configuration/configuration';
 import { MaintenancePage } from '../pages/maintenance/maintenance';
 
 @Component({
@@ -69,7 +69,7 @@ export class MyApp {
       { title: 'NAVIGATION.RECIPES',    icon: 'flask', component: RecipesPage, color: 'menu-recipes' },
       { title: 'NAVIGATION.MAINTENANCE', icon:'build', component: MaintenancePage,  color: 'menu-maintenance'},
       { title: 'NAVIGATION.DIAGNOSTICS', icon: 'pr-stethoscope', component: DiagnosticsPage, color: 'menu-diagnostics'},
-      { title: 'NAVIGATION.SETTINGS', icon: 'settings', component: SettingsPage, color: 'menu-settings' }
+      { title: 'NAVIGATION.CONFIGURATION', icon: 'settings', component: ConfigurationPage, color: 'menu-settings' }
     ];
 
     //Translate menu titles

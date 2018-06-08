@@ -37,15 +37,15 @@ SOFTWARE.
       <button ion-button menuToggle>
         <ion-icon name="menu"></ion-icon>
       </button>
-      <ion-title>{{ 'NAVIGATION.SETTINGS' | translate }}</ion-title>
+      <ion-title>{{ 'NAVIGATION.CONFIGURATION' | translate }}</ion-title>
     </ion-navbar>
   </ion-header>
   
   <ion-content padding>
     <ion-tabs>
         <ion-tab tabIcon="star" tabTitle="Particle.io" [root]="particleSettingsTab"></ion-tab>
-        <ion-tab tabIcon="cube"  tabTitle="Devices" [root]="deviceSettingsTab"></ion-tab>
-        <ion-tab tabIcon="options"  tabTitle="Misc" [root]="miscSettingsTab"></ion-tab>
+        <ion-tab tabIcon="cube"  tabTitle="{{ 'CONFIGURATION.TABS.DEVICES' | translate }}" [root]="deviceSettingsTab"></ion-tab>
+        <ion-tab tabIcon="options"  tabTitle="{{ 'CONFIGURATION.TABS.MISC' | translate }}" [root]="miscSettingsTab"></ion-tab>
       </ion-tabs>
   </ion-content>
 
