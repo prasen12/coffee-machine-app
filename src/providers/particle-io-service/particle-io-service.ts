@@ -424,11 +424,19 @@ export class ParticleIoServiceProvider {
             name: 'powerDown',
             argument: ''
         })
-        .then((result) => {
-            console.log(`Powerdown result = ${result}`);
-        }).catch((err) => {
-            console.error(`POwerdown error = ${err.message}`, err);
-        });
+            .then((result) => {
+                console.log(`Powerdown result = ${result}`);
+            }).catch((err) => {
+                console.error(`POwerdown error = ${err.message}`, err);
+            });
+    }
+
+    public getClaimCode(): Promise<any> {
+        return this.particleApi.getClaimCode({auth: this.accessToken});
+    }
+
+    public claimDevice(deviceId: string):Promise<any> {
+        return this.particleApi.claimDevice({deviceId: deviceId, auth: this.accessToken});
     }
 
 }

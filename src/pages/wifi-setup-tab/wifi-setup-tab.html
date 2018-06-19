@@ -1,0 +1,128 @@
+<!--
+  Generated template for the WifiSetupTabPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+    Wifi Setup
+</ion-header>
+
+
+<ion-content padding>
+    <div *ngIf="isSignedIn()">
+        <ion-list *ngIf="setupStep > -1">
+            <ion-item *ngIf="setupStep === 1">
+                <h2>Searching for Coffee Machine ...</h2>
+                <ion-spinner color="primary" item-end></ion-spinner>
+            </ion-item>
+
+
+            <ion-item *ngIf="setupStep > 1">
+                <h2>Found {{softAPSSID}} </h2>
+                <ion-icon name="checkmark-circle" color="secondary" item-end></ion-icon>
+            </ion-item>
+
+            <ion-item *ngIf="setupStep === 2">
+                <h2>Connecting to {{softAPSSID}} ... </h2>
+                <ion-spinner color="primary" item-end></ion-spinner>
+            </ion-item>
+
+            <ion-item *ngIf="setupStep > 2 ">
+                <h2>Connected to {{softAPSSID}} </h2>
+                <ion-icon name="checkmark-circle" color="secondary" item-end></ion-icon>
+            </ion-item>
+
+            <ion-item *ngIf="setupStep === 3">
+                <h2>Getting your machine's device ID ... </h2>
+                <ion-spinner color="primary" item-end></ion-spinner>
+            </ion-item>
+
+            <ion-item *ngIf="setupStep > 3 ">
+                <h2>Acquired device ID successfully</h2>
+                <p>Device ID: {{deviceId}} </p>
+                <ion-icon name="checkmark-circle" color="secondary" item-end></ion-icon>
+
+                <!-- <ion-icon *ngIf="!isDeviceClaimed" name="checkmark-circle" color="secondary" item-end></ion-icon>
+                <p *ngIf="isDeviceClaimed" color="danger">This device has already been claimed</p> -->
+
+            </ion-item>
+
+            <ion-item *ngIf="setupStep === 4">
+                <h2>Scanning for WiFi access points to use </h2>
+                <ion-spinner color="primary" item-end></ion-spinner>
+            </ion-item>
+
+            <ion-item *ngIf="setupStep === 5">
+                <h2>Configuring coffee machine Wifi </h2>
+                <p>Using WiFi access point <b>{{ selectedSSID }}</b> </p>
+                <ion-spinner color="primary" item-end></ion-spinner>
+            </ion-item>
+
+            <ion-item *ngIf="setupStep > 5">
+                <div *ngIf="setupFailed">
+                    <h2>Failed to configure WiFi</h2>
+                    <p>Using WiFi Access Point <b>{{ selectedSSID }}</b></p>
+                    <ion-icon name="close-circle" color="danger" item-end></ion-icon>
+                </div>
+                <div *ngIf="!setupFailed">
+                    <h2>Coffee Machine WiFi configured </h2>
+                    <p>Using WiFi Access Point <b>{{ selectedSSID }}</b>  </p>
+                    <ion-icon name="checkmark-circle" color="secondary" item-end></ion-icon>
+                </div>
+            </ion-item>
+
+            <ion-item *ngIf="setupStep === 6">
+                <h2>Claiming device {{deviceId}}</h2>
+                <ion-spinner color="primary" item-end></ion-spinner>
+            </ion-item>
+
+            <ion-item *ngIf="setupStep > 6">
+                <h2>Device {{deviceId}} claimed </h2>
+                <ion-icon name="checkmark-circle" color="secondary" item-end></ion-icon>
+            </ion-item>
+
+            <ion-item *ngIf="setupStep === 7">
+                <h2>Downloading firmware </h2>
+                <ion-spinner color="primary" item-end></ion-spinner>
+            </ion-item>
+
+            <ion-item *ngIf="setupStep > 7">
+                <h2>Firmware downloaded </h2>
+                <ion-icon name="checkmark-circle" color="secondary" item-end></ion-icon>
+            </ion-item>
+
+            <ion-item *ngIf="setupStep === 8">
+                <h2>Updating firmware </h2>
+                <ion-spinner color="primary" item-end></ion-spinner>
+            </ion-item>
+
+            <ion-item *ngIf="setupStep > 8">
+                <h2>Firmware updated </h2>
+                <ion-icon name="checkmark-circle" color="secondary" item-end></ion-icon>
+            </ion-item>
+        </ion-list>
+        <ion-card *ngIf="setupStep === -1">
+            <ion-card-content>
+                <h2>To setup your coffee machine's WiFi, do the following</h2>
+                <ul>
+                    <li>Hold the Blue WiFi button down for 3 seconds until you see it blinking blue </li>
+                    <li>Click on
+                        <b>Setup</b> to initiate the configuration process</li>
+                </ul>
+            </ion-card-content>
+        </ion-card>
+    </div>
+    <div *ngIf="!isSignedIn()">
+        <ion-item color="danger">
+            {{ 'MAIN.NOT_SIGNED_IN' | translate}}
+        </ion-item>
+    </div>
+</ion-content>
+
+<ion-footer *ngIf="isSignedIn()" text-center>
+
+    <button *ngIf="!setupFailed" ion-button [disabled]="setupStep > 0 && setupStep < 9" (click)="setup()">Setup</button>
+    <button *ngIf="setupFailed" ion-button [disabled]="!setupFailed" (click)="setup()">Retry</button>
+
+</ion-footer>

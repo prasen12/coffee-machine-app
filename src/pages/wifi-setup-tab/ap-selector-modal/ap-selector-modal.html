@@ -23,31 +23,22 @@ SOFTWARE.
 
 
 
- File Created: Monday, 14th May 2018 11:26:28 pm
+ File Created: Thursday, 14th June 2018 11:23:45 pm
  Author: Prasen Palvankar
 
- Last Modified: Monday, 14th May 2018 11:26:28 pm
+ Last Modified: Thursday, 14th June 2018 11:24:48 pm
  Modified By: Prasen Palvankar
-
-
 -->
-
-<ion-header>
-    <ion-navbar>
-      <button ion-button menuToggle>
-        <ion-icon name="menu"></ion-icon>
-      </button>
-      <ion-title>{{ 'NAVIGATION.CONFIGURATION' | translate }}</ion-title>
-    </ion-navbar>
-  </ion-header>
-
-  <ion-content padding>
-    <ion-tabs>
-        <ion-tab tabIcon="star" tabTitle="Particle.io" [root]="particleSettingsTab"></ion-tab>
-        <ion-tab tabIcon="cube"  tabTitle="{{ 'CONFIGURATION.TABS.DEVICES' | translate }}" [root]="deviceSettingsTab"></ion-tab>
-        <ion-tab tabIcon="wifi"  tabTitle="{{ 'CONFIGURATION.TABS.WIFI' | translate }}" [root]="wifiSetupTab"></ion-tab>
-        <ion-tab tabIcon="options"  tabTitle="{{ 'CONFIGURATION.TABS.MISC' | translate }}" [root]="miscSettingsTab"></ion-tab>
-      </ion-tabs>
-  </ion-content>
-
+<ion-content padding>
+        <ion-list radio-group [(ngModel)]="selectedAP">
+                <ion-list-header>Select Access Point To Use</ion-list-header>
+                <ion-item *ngFor="let item of apList">
+                    <ion-label>{{item.ssid}}</ion-label>
+                    <ion-radio [value]="item.ssid"></ion-radio>
+                </ion-item>
+            </ion-list>
+</ion-content>
+<ion-footer text-center>
+        <button ion-button [disabled]="selectedAP === undefined" (click)="handleOK()" >{{'MAIN.OK' | translate}}</button>
+</ion-footer>
 

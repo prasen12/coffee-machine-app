@@ -62,6 +62,8 @@ import { EventsTabPage } from '../pages/events-tab/events-tab';
 import { RecipeFormPageModule } from './../pages/recipe-form/recipe-form.module';
 import { BrewServiceProvider } from '../providers/brew-service/brew-service';
 import { MiscSettingsTabModule } from '../pages/misc-settings/misc-settings.module';
+import { MachineSetupServiceProvider } from '../providers/machine-setup-service/machine-setup-service';
+import { WifiSetupTabPageModule } from './../pages/wifi-setup-tab/wifi-setup-tab.module';
 
 @NgModule({
   declarations: [
@@ -84,6 +86,7 @@ import { MiscSettingsTabModule } from '../pages/misc-settings/misc-settings.modu
     HttpClientModule,
     RecipeFormPageModule,
     MiscSettingsTabModule,
+    WifiSetupTabPageModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
     TranslateModule.forRoot({
@@ -117,7 +120,8 @@ import { MiscSettingsTabModule } from '../pages/misc-settings/misc-settings.modu
     ParticleIoServiceProvider,
     RecipeServiceProvider,
     StorageServiceProvider,
-    BrewServiceProvider
+    BrewServiceProvider,
+    MachineSetupServiceProvider
   ]
 })
 export class AppModule {}

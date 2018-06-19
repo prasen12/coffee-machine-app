@@ -23,25 +23,37 @@
  *
  *
  *
- *  File Created: Thursday, 7th June 2018 10:14:29 pm
+ *  File Created: Friday, 15th June 2018 12:05:56 am
  *  Author: Prasen Palvankar
  *
- *  Last Modified: Friday, 8th June 2018 5:59:34 pm
+ *  Last Modified: Friday, 15th June 2018 12:13:04 am
  *  Modified By: Prasen Palvankar
  */
 
-import { NgModule } from '@angular/core';
-import { IonicPageModule } from 'ionic-angular';
-import { MiscSettingsTab } from './misc-settings';
-import { TranslateModule } from '@ngx-translate/core';
 
-@NgModule({
-  declarations: [
-    MiscSettingsTab,
-  ],
-  imports: [
-    IonicPageModule.forChild(MiscSettingsTab),
-    TranslateModule
-  ],
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+
+@IonicPage()
+@Component({
+    selector: 'page-ap-selector-modal',
+    templateUrl: 'ap-selector-modal.html',
 })
-export class MiscSettingsTabModule {}
+export class ApSelectorModalPage {
+    apList: Array<any>;
+    selectedAP: string;
+
+    constructor(public navCtrl: NavController,
+        public viewCtrl: ViewController,
+        public navParams: NavParams) {
+        this.apList = navParams.get('apList');
+    }
+
+    public handleOK() {
+        this.viewCtrl.dismiss(this.selectedAP);
+    }
+    ionViewDidLoad() {
+
+    }
+
+}

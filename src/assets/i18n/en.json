@@ -3,14 +3,18 @@
         "MENU": "Menu",
         "ERROR": "Error!",
         "OK": "OK",
+        "YES": "Yes",
+        "NO": "No",
         "CANCEL": "Cancel",
         "REFRESHING": "Refreshing",
         "CONFIRM": "Please Confirm",
         "LOADING": "Loading ...",
         "SAVE": "Save",
         "BREW": "Brew",
+        "WAIT": "Please wait...",
+        "PASSWORD": "Password",
         "BREW_CANCELLED": "Brew operation cancelled",
-        "NOT_SIGNED_IN": "Not Signed in to Particle.io. Please sign in using the Settings option in the menu",
+        "NOT_SIGNED_IN": "Not Signed in to Particle.io",
         "NO_DEVICE_SELECTED": "No device has been selected. Use Settings option to select device",
         "BREW_STATES": {
             "FILL": "Fill Reservoir",
@@ -61,8 +65,17 @@
     "CONFIGURATION": {
         "TABS": {
             "DEVICES": "Devices",
-            "MISC": "Settings"
+            "MISC": "Settings",
+            "WIFI": "WiFi"
         }
+    },
+    "MACHINE_SETUP":{
+        "NO_WIFIWIZARD": "WiFiWizard2 not loaded. Do you have WiFi on?",
+        "SOFTAP_NOT_FOUND": "Unable to find {{ssidName}}. Please try again",
+        "PASSWORD_TITLE":"Access Point Password",
+        "PASSWORD_TEXT": "Please enter the password for {{ssid}}",
+        "RESTART_MACHINE_TITLE": "Check WiFi Status",
+        "RESTART_MACHINE_TEXT": "Please unplug power and reconnect. If your WiFi setup is successfull, the LED be slowly blinking Cyan color. If the Wifi LED is rapidly blinking Green. You may need to redo the setup and ensure your password to the access point is correct. Do you see it slowly blinking Cyan?"
     },
     "SETTINGS": {
         "PARTICLE": {

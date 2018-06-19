@@ -23,25 +23,26 @@
  *
  *
  *
- *  File Created: Thursday, 7th June 2018 10:14:29 pm
+ *  File Created: Friday, 15th June 2018 12:03:35 am
  *  Author: Prasen Palvankar
  *
- *  Last Modified: Friday, 8th June 2018 5:59:34 pm
+ *  Last Modified: Friday, 15th June 2018 12:33:45 am
  *  Modified By: Prasen Palvankar
  */
 
+
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { MiscSettingsTab } from './misc-settings';
+import { ApSelectorModalPage } from './ap-selector-modal';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
-    MiscSettingsTab,
+    ApSelectorModalPage,
   ],
   imports: [
-    IonicPageModule.forChild(MiscSettingsTab),
-    TranslateModule
+    IonicPageModule.forChild(ApSelectorModalPage),
+    TranslateModule,
   ],
 })
-export class MiscSettingsTabModule {}
+export class ApSelectorModalPageModule {}
