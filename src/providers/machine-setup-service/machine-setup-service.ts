@@ -211,13 +211,20 @@ export class MachineSetupServiceProvider {
         });
     }
 
-    public claimDevice() {
-        this.particleIOService.getClaimCode()
-        .then((result) => {
-
-        }).catch((err) => {
-
+    public claimDevice(deviceId: string): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this.particleIOService.getClaimCode()
+                .then((result) => {
+                    return this.particleIOService.claimDevice(deviceId)
+                })
+                .then(result => {
+                    resolve(result);
+                })
+                .catch((err) => {
+                    reject(err);
+                });
         });
+
 
     }
 }

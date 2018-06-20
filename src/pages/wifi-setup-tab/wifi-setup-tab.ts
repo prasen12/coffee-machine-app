@@ -184,10 +184,13 @@ export class WifiSetupTabPage {
                 return this.machineSetupService.connectUsingSoftAP()
             })
             .then((connectionResult) => {
+                // Connected to the device AP, now get the device ID from the device
                 this.setupStep = 3;
                 return this.machineSetupService.getDeviceId();
             })
             .then(deviceId => {
+                // Got the device id, ask the device to do a WiFi scan and get a list
+                // of access points that can be used by the device
                 console.log('Device id =', deviceId);
                 this.setupStep = 4;
                 if (this.isDeviceClaimed) {
@@ -198,16 +201,27 @@ export class WifiSetupTabPage {
 
             })
             .then(apList => {
+                // We have the list of access points, now ask the user to select an AP
+                // to be used by the device
                 console.log(apList);
                 return this.selectAP(apList);
             })
             .then(selectedAP => {
+                // Configure the device to use the selected access point
                 console.log(selectedAP);
                 this.selectedSSID = selectedAP.ssid;
                 this.setupStep = 5;
                 return this.machineSetupService.configureAccessPoint(selectedAP);
             })
             .then(result => {
+                // WiFi Configuration done. 
+                // Have the user power cycle the machine to ensure it connects to the new AP and 
+                // is able to connect to the internet using this new AP
+                // A shlowly blining (breathing) Cyan LED indicates that the device is able to connect to 
+                // the internet
+                // Any other LED color indicates a failed setup. Have the user retry
+                //
+                // Now that we have the machine connected to the internet, register it with Particle.io
                 console.log('Config ap result', result);
                 this.setupStep = 6;
                 this.showConfirmAlert(this.messages["MACHINE_SETUP.RESTART_MACHINE_TITLE"], this.messages["MACHINE_SETUP.RESTART_MACHINE_TEXT"])
@@ -217,10 +231,20 @@ export class WifiSetupTabPage {
                             this.setupFailed = true;
                         } else {
                             this.setupStep = 6;
+                            // Register with Particle.io
+                           return this.machineSetupService.claimDevice(this.deviceId);
                         }
                     })
             })
+            .then (result => {
+                // Device claimed.
+                // Update firmware if necessay
+                console.log('Claim device result', result);
+                this.setupStep = 7;
+            })
             .catch((err) => {
+                // If any error occurs, allow the user to retry
+                // The process will start from the very first step
                 console.log(err);
                 if (this.setupStep === 1) {
                     this.showAlert(this.messages["MAIN.ERROR"], this.messages["MACHINE_SETUP.SOFTAP_NOT_FOUND"])

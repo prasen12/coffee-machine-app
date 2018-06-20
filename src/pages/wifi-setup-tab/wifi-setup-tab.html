@@ -13,34 +13,34 @@
     <div *ngIf="isSignedIn()">
         <ion-list *ngIf="setupStep > -1">
             <ion-item *ngIf="setupStep === 1">
-                <h2>Searching for Coffee Machine ...</h2>
+                <h2 translate>MACHINE_SETUP.SEARCHING</h2>
                 <ion-spinner color="primary" item-end></ion-spinner>
             </ion-item>
 
 
             <ion-item *ngIf="setupStep > 1">
-                <h2>Found {{softAPSSID}} </h2>
+                <h2 translate [translateParams]="{ssid: softAPSSID}">MACHINE_SETUP.FOUND_SSID</h2>
                 <ion-icon name="checkmark-circle" color="secondary" item-end></ion-icon>
             </ion-item>
 
             <ion-item *ngIf="setupStep === 2">
-                <h2>Connecting to {{softAPSSID}} ... </h2>
+                <h2 translate [translateParams]="{ssid: softAPSSID}">MACHINE_SETUP.CONNECTING_TO_SSID</h2>
                 <ion-spinner color="primary" item-end></ion-spinner>
             </ion-item>
 
             <ion-item *ngIf="setupStep > 2 ">
-                <h2>Connected to {{softAPSSID}} </h2>
+                <h2 translate [translateParams]="{ssid: softAPSSID}">MACHINE_SETUP.CONNECTED_TO_SSID</h2>
                 <ion-icon name="checkmark-circle" color="secondary" item-end></ion-icon>
             </ion-item>
 
             <ion-item *ngIf="setupStep === 3">
-                <h2>Getting your machine's device ID ... </h2>
+                <h2 translate>MACHINE_SETUP.GETTING_YOUR_DEVICE_ID</h2>
                 <ion-spinner color="primary" item-end></ion-spinner>
             </ion-item>
 
             <ion-item *ngIf="setupStep > 3 ">
-                <h2>Acquired device ID successfully</h2>
-                <p>Device ID: {{deviceId}} </p>
+                <h2 translate>MACHINE_SETUP.GOT_DEVICE_ID</h2>
+                <p translate [translateParams]="{deviceId: deviceId}">MACHINE_SETUP.DEVICE_ID</p>
                 <ion-icon name="checkmark-circle" color="secondary" item-end></ion-icon>
 
                 <!-- <ion-icon *ngIf="!isDeviceClaimed" name="checkmark-circle" color="secondary" item-end></ion-icon>
@@ -49,56 +49,56 @@
             </ion-item>
 
             <ion-item *ngIf="setupStep === 4">
-                <h2>Scanning for WiFi access points to use </h2>
+                <h2 translate>MACHINE_SETUP.SCANNING_FOR_AP</h2>
                 <ion-spinner color="primary" item-end></ion-spinner>
             </ion-item>
 
             <ion-item *ngIf="setupStep === 5">
-                <h2>Configuring coffee machine Wifi </h2>
-                <p>Using WiFi access point <b>{{ selectedSSID }}</b> </p>
+                <h2 translate>MACHINE_SETUP.CONFIGURING_WIFI</h2>
+                <p translate [translateParams]="{ssid: selectedSSID}">MACHINE_SETUP.USING_WIFI_AP</p>
                 <ion-spinner color="primary" item-end></ion-spinner>
             </ion-item>
 
             <ion-item *ngIf="setupStep > 5">
                 <div *ngIf="setupFailed">
-                    <h2>Failed to configure WiFi</h2>
-                    <p>Using WiFi Access Point <b>{{ selectedSSID }}</b></p>
+                    <h2 translate>MACHINE_SETUP.FAILED_TO_CONFIGURE_WIFIi</h2>
+                    <p translate [translateParams]="{ssid: selectedSSID}">MACHINE_SETUP.USING_WIFI_AP</p>
                     <ion-icon name="close-circle" color="danger" item-end></ion-icon>
                 </div>
                 <div *ngIf="!setupFailed">
-                    <h2>Coffee Machine WiFi configured </h2>
-                    <p>Using WiFi Access Point <b>{{ selectedSSID }}</b>  </p>
+                    <h2 translate >MACHINE_SETUP.COFFEE_MACHINE_CONFIGURED</h2>
+                    <p translate [translateParams]="{ssid: selectedSSID}">MACHINE_SETUP.USING_WIFI_AP</p>
                     <ion-icon name="checkmark-circle" color="secondary" item-end></ion-icon>
                 </div>
             </ion-item>
 
             <ion-item *ngIf="setupStep === 6">
-                <h2>Claiming device {{deviceId}}</h2>
+                <h2 translate [translateParams]="{deviceId: deviceId}">MACHINE_SETUP.CLAIMING_DEVICE</h2>
                 <ion-spinner color="primary" item-end></ion-spinner>
             </ion-item>
 
             <ion-item *ngIf="setupStep > 6">
-                <h2>Device {{deviceId}} claimed </h2>
+                <h2 translate [translateParams]="{deviceId: deviceId}">MACHINE_SETUP.DEVICE_CLAIMED</h2>
                 <ion-icon name="checkmark-circle" color="secondary" item-end></ion-icon>
             </ion-item>
 
             <ion-item *ngIf="setupStep === 7">
-                <h2>Downloading firmware </h2>
+                <h2 translate>MACHINE_SETUP.DOWNLOADING_FIRMWARE</h2>
                 <ion-spinner color="primary" item-end></ion-spinner>
             </ion-item>
 
             <ion-item *ngIf="setupStep > 7">
-                <h2>Firmware downloaded </h2>
+                <h2 translate>MACHINE_SETUP.FIRMWARE_DOWNLOADED</h2>
                 <ion-icon name="checkmark-circle" color="secondary" item-end></ion-icon>
             </ion-item>
 
             <ion-item *ngIf="setupStep === 8">
-                <h2>Updating firmware </h2>
+                <h2 translate>MACHINE_SETUP.UPDATING_FIRMWARE</h2>
                 <ion-spinner color="primary" item-end></ion-spinner>
             </ion-item>
 
             <ion-item *ngIf="setupStep > 8">
-                <h2>Firmware updated </h2>
+                <h2 translate>MACHINE_SETUP.FIRMWARE_UPDATED</h2>
                 <ion-icon name="checkmark-circle" color="secondary" item-end></ion-icon>
             </ion-item>
         </ion-list>
