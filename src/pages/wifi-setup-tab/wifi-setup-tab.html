@@ -4,12 +4,10 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
-    Wifi Setup
-</ion-header>
-
-
 <ion-content padding>
+    <ion-title>
+        <h2 translate>MACHINE_SETUP.HEADER</h2>
+    </ion-title>
     <div *ngIf="isSignedIn()">
         <ion-list *ngIf="setupStep > -1">
             <ion-item *ngIf="setupStep === 1">
@@ -59,29 +57,30 @@
                 <ion-spinner color="primary" item-end></ion-spinner>
             </ion-item>
 
-            <ion-item *ngIf="setupStep > 5">
-                <div *ngIf="setupFailed">
-                    <h2 translate>MACHINE_SETUP.FAILED_TO_CONFIGURE_WIFIi</h2>
-                    <p translate [translateParams]="{ssid: selectedSSID}">MACHINE_SETUP.USING_WIFI_AP</p>
-                    <ion-icon name="close-circle" color="danger" item-end></ion-icon>
-                </div>
-                <div *ngIf="!setupFailed">
-                    <h2 translate >MACHINE_SETUP.COFFEE_MACHINE_CONFIGURED</h2>
-                    <p translate [translateParams]="{ssid: selectedSSID}">MACHINE_SETUP.USING_WIFI_AP</p>
-                    <ion-icon name="checkmark-circle" color="secondary" item-end></ion-icon>
-                </div>
+            <ion-item *ngIf="setupStep > 5 && setupFailed">
+
+                <h2 translate>MACHINE_SETUP.FAILED_TO_CONFIGURE_WIFIi</h2>
+                <p translate [translateParams]="{ssid: selectedSSID}">MACHINE_SETUP.USING_WIFI_AP</p>
+                <ion-icon name="close-circle" color="danger" item-end></ion-icon>
+            </ion-item>
+            <ion-item *ngIf="setupStep > 5 && !setupFailed">
+                <h2 translate>MACHINE_SETUP.COFFEE_MACHINE_CONFIGURED</h2>
+                <p translate [translateParams]="{ssid: selectedSSID}">MACHINE_SETUP.USING_WIFI_AP</p>
+                <ion-icon name="checkmark-circle" color="secondary" item-end></ion-icon>
             </ion-item>
 
             <ion-item *ngIf="setupStep === 6">
                 <h2 translate [translateParams]="{deviceId: deviceId}">MACHINE_SETUP.CLAIMING_DEVICE</h2>
+                <p translate [translateParams]="{deviceId: deviceId}">MACHINE_SETUP.DEVICE_ID</p>
                 <ion-spinner color="primary" item-end></ion-spinner>
             </ion-item>
 
             <ion-item *ngIf="setupStep > 6">
                 <h2 translate [translateParams]="{deviceId: deviceId}">MACHINE_SETUP.DEVICE_CLAIMED</h2>
+                <p translate [translateParams]="{deviceId: deviceId}">MACHINE_SETUP.DEVICE_ID</p>
                 <ion-icon name="checkmark-circle" color="secondary" item-end></ion-icon>
             </ion-item>
-
+<!--
             <ion-item *ngIf="setupStep === 7">
                 <h2 translate>MACHINE_SETUP.DOWNLOADING_FIRMWARE</h2>
                 <ion-spinner color="primary" item-end></ion-spinner>
@@ -100,7 +99,7 @@
             <ion-item *ngIf="setupStep > 8">
                 <h2 translate>MACHINE_SETUP.FIRMWARE_UPDATED</h2>
                 <ion-icon name="checkmark-circle" color="secondary" item-end></ion-icon>
-            </ion-item>
+            </ion-item> -->
         </ion-list>
         <ion-card *ngIf="setupStep === -1">
             <ion-card-content>
@@ -122,7 +121,8 @@
 
 <ion-footer *ngIf="isSignedIn()" text-center>
 
-    <button *ngIf="!setupFailed" ion-button [disabled]="setupStep > 0 && setupStep < 9" (click)="setup()">Setup</button>
-    <button *ngIf="setupFailed" ion-button [disabled]="!setupFailed" (click)="setup()">Retry</button>
+    <button *ngIf="!setupFailed && setupStep !== 999" ion-button [disabled]="setupStep > 0 && setupStep < 9" (click)="setup()">{{ 'MAIN.SETUP' | translate }}</button>
+    <button *ngIf="!setupFailed && setupStep === 999" ion-button (click)="done()" >{{ 'MAIN.DONE' | translate }}</button>
+    <button *ngIf="setupFailed" ion-button [disabled]="!setupFailed" (click)="setup()" >{{ 'MAIN.RETRY' | translate }}</button>
 
 </ion-footer>

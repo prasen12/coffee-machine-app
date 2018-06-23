@@ -1,4 +1,3 @@
-import { Recipe } from './../recipe-service/recipe-service';
 /*
  *  MIT License
  *
@@ -34,7 +33,9 @@ import { Recipe } from './../recipe-service/recipe-service';
 
 import { Storage } from '@ionic/storage';
 import { Injectable } from '@angular/core';
+import { Recipe } from './../recipe-service/recipe-service';
 import * as Particle from 'particle-api-js';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class ParticleIoServiceProvider {
@@ -52,7 +53,7 @@ export class ParticleIoServiceProvider {
      * Constructor
      * @param storage
      */
-    constructor(private storage: Storage) {
+    constructor(private storage: Storage, private http: HttpClient) {
         this.particleApi = new Particle();
         this.eventLog = new Array();
         this.storage.get('loginData')
@@ -432,11 +433,34 @@ export class ParticleIoServiceProvider {
     }
 
     public getClaimCode(): Promise<any> {
-        return this.particleApi.getClaimCode({auth: this.accessToken});
+        return this.particleApi.getClaimCode({ auth: this.accessToken });
     }
 
-    public claimDevice(deviceId: string):Promise<any> {
-        return this.particleApi.claimDevice({deviceId: deviceId, auth: this.accessToken});
+    public claimDevice(deviceId: string): Promise<any> {
+        return this.particleApi.claimDevice({ deviceId: deviceId, auth: this.accessToken });
+    }
+
+    public updateFirmware(deviceId: string): Promise<any> {
+        return new Promise((resolve, reject) => {
+          this.http.get('./assets/firmware/orenda.bin', {responseType: 'arraybuffer'}).subscribe(data => {
+              let firmwareBlob = new Blob([data],{type: 'application/octet-stream'});
+              let opts =  {
+                  deviceId: deviceId,
+                  files: {
+                      'orenda.bin': firmwareBlob
+                  },
+                  auth: this.accessToken
+              };
+              this.particleApi.flashDevice(opts)
+              .then((result) => {
+                  console.log(result);
+                  resolve(result);
+              }).catch((err) => {
+                  console.error(err);
+              });
+              resolve(data);
+          })
+        });
     }
 
 }

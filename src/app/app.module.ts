@@ -64,7 +64,6 @@ import { BrewServiceProvider } from '../providers/brew-service/brew-service';
 import { MiscSettingsTabModule } from '../pages/misc-settings/misc-settings.module';
 import { MachineSetupServiceProvider } from '../providers/machine-setup-service/machine-setup-service';
 import { WifiSetupTabPageModule } from './../pages/wifi-setup-tab/wifi-setup-tab.module';
-
 @NgModule({
   declarations: [
     MyApp,

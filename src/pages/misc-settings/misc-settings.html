@@ -15,9 +15,12 @@
 
 <ion-content padding>
   <ion-list>
-      <ion-item>
-          <ion-icon name="wifi" color="misc-settings-wifi" item-start></ion-icon>
-          <ion-label>{{ 'SETTINGS.MISC.WIFI' | translate }} </ion-label>
+      <ion-item >
+          <button ion-item (click)="updateFirmware()">
+                <ion-icon name="document" color="misc-settings-wifi" item-start></ion-icon>
+                {{ 'SETTINGS.MISC.FIRMWARE' | translate }}
+          </button>
+
       </ion-item>
   </ion-list>
 </ion-content>

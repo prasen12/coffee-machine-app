@@ -68,6 +68,8 @@ export class WifiSetupTabPage {
         'MACHINE_SETUP.PASSWORD_TEXT': '',
         'MACHINE_SETUP.RESTART_MACHINE_TITLE': '',
         'MACHINE_SETUP.RESTART_MACHINE_TEXT': '',
+        'MACHINE_SETUP.SETUP_SUCCESSFULL_TITLE':'',
+        'MACHINE_SETUP.SETUP_SUCCESSFULL_TEXT': '',
         'MAIN.PASSWORD': ''
     };
 
@@ -174,6 +176,13 @@ export class WifiSetupTabPage {
         return this.machineSetupService.deviceClaimed;
     }
 
+    public done() {
+        this.showAlert(this.messages["MACHINE_SETUP.SETUP_SUCCESSFULL_TITLE"], this.messages["MACHINE_SETUP.SETUP_SUCCESSFULL_TEXT"])
+        .then (()=> {
+            this.setupStep = -1;
+        })
+    }
+
     public setup() {
         this.setupStep = 1;
         this.setupFailed = false;
@@ -214,33 +223,34 @@ export class WifiSetupTabPage {
                 return this.machineSetupService.configureAccessPoint(selectedAP);
             })
             .then(result => {
-                // WiFi Configuration done. 
-                // Have the user power cycle the machine to ensure it connects to the new AP and 
+                // WiFi Configuration done.
+                // Have the user power cycle the machine to ensure it connects to the new AP and
                 // is able to connect to the internet using this new AP
-                // A shlowly blining (breathing) Cyan LED indicates that the device is able to connect to 
+                // A shlowly blining (breathing) Cyan LED indicates that the device is able to connect to
                 // the internet
                 // Any other LED color indicates a failed setup. Have the user retry
                 //
                 // Now that we have the machine connected to the internet, register it with Particle.io
                 console.log('Config ap result', result);
                 this.setupStep = 6;
-                this.showConfirmAlert(this.messages["MACHINE_SETUP.RESTART_MACHINE_TITLE"], this.messages["MACHINE_SETUP.RESTART_MACHINE_TEXT"])
-                    .then(result => {
-                        if (result === this.messages["MAIN.NO"]) {
-                            this.setupStep = 0;
-                            this.setupFailed = true;
-                        } else {
-                            this.setupStep = 6;
-                            // Register with Particle.io
-                           return this.machineSetupService.claimDevice(this.deviceId);
-                        }
-                    })
+                return this.showConfirmAlert(this.messages["MACHINE_SETUP.RESTART_MACHINE_TITLE"], this.messages["MACHINE_SETUP.RESTART_MACHINE_TEXT"]);
+            })
+            .then(result => {
+                if (result === this.messages["MAIN.NO"]) {
+                    this.setupStep = 0;
+                    this.setupFailed = true;
+                } else {
+                    this.setupStep = 6;
+                    // Register with Particle.io
+                   return this.machineSetupService.claimDevice(this.deviceId);
+                }
             })
             .then (result => {
                 // Device claimed.
                 // Update firmware if necessay
                 console.log('Claim device result', result);
-                this.setupStep = 7;
+                this.setupStep = 999;
+                return this.particleIOService.updateFirmware(this.deviceId);
             })
             .catch((err) => {
                 // If any error occurs, allow the user to retry

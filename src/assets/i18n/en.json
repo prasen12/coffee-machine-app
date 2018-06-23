@@ -5,6 +5,9 @@
         "OK": "OK",
         "YES": "Yes",
         "NO": "No",
+        "DONE": "Done",
+        "SETUP": "Setup",
+        "RETRY": "Retry",
         "CANCEL": "Cancel",
         "REFRESHING": "Refreshing",
         "CONFIRM": "Please Confirm",
@@ -70,6 +73,7 @@
         }
     },
     "MACHINE_SETUP":{
+        "HEADER": "WiFi & Device Setup",
         "NO_WIFIWIZARD": "WiFiWizard2 not loaded. Do you have WiFi on?",
         "SOFTAP_NOT_FOUND": "Unable to find {{ssidName}}. Please try again",
         "PASSWORD_TITLE":"Access Point Password",
@@ -85,15 +89,17 @@
         "USING_WIFI_AP": "Using WiFi access point {{ssid}}",
         "FAILED_TO_CONFIGURE_WIFI": "Failed to configure WiFi",
         "COFFEE_MACHINE_CONFIGURED": "Coffee Machine WiFi configured",
-        "CLAIMING_DEVICE": "Claiming device {{deviceId}}",
+        "CLAIMING_DEVICE": "Claiming device ...",
         "CONNECTED_TO_SSID": "Connected to {{ssid}}",
-        "DEVICE_CLAIMED": "Device {{deviceId}} claimed",
+        "DEVICE_CLAIMED": "Device claimed",
         "DOWNLOADING_FIRMWARE": "Downloading firmware ...",
         "FIRMWARE_DOWNLOADED": "Firmware downloaded",
         "UPDATING_FIRMWARE": "Updating firmware ...",
         "FIRMWARE_UPDATED": "Firmware updated",
+        "SETUP_SUCCESSFULL_TITLE": "WiFi Setup Complete",
+        "SETUP_SUCCESSFULL_TEXT": "Your machine has been now configured and ready to use.\n\n Before you can use the machine through this app, you need to select the device for use from the Devices tab",
         "RESTART_MACHINE_TITLE": "Check WiFi Status",
-        "RESTART_MACHINE_TEXT": "Please unplug power and reconnect. If your WiFi setup is successfull, the LED be slowly blinking Cyan color. If the Wifi LED is rapidly blinking Green. You may need to redo the setup and ensure your password to the access point is correct. Do you see it slowly blinking Cyan?"
+        "RESTART_MACHINE_TEXT": "Please unplug the coffee machine power and reconnect.\nIf your WiFi setup is successfull, the LED will blink green for some time and then slowly start blinking Cyan color. If the Wifi LED keeps rapidly blinking Green or Blue, you may need to redo the setup. Ensure you enter the correct password to the access point when you retry. Do you see it slowly blinking Cyan?"
     },
     "SETTINGS": {
         "PARTICLE": {
@@ -113,7 +119,8 @@
         },
         "MISC": {
             "TITLE": "Settings",
-            "WIFI": "WiFi Setup"
+            "WIFI": "WiFi Setup",
+            "FIRMWARE":"Update Firmware"
         }
 
     },
